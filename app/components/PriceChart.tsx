@@ -1,48 +1,32 @@
 "use client"
 
-import React from "react"
+import dynamic from "next/dynamic"
 
-let LineChart
-let Line
-let XAxis
-let YAxis
-let Tooltip
-let ResponsiveContainer
+const ResponsiveContainer = dynamic(() => import("recharts").then(m => m.ResponsiveContainer), { ssr: false })
+const LineChart = dynamic(() => import("recharts").then(m => m.LineChart), { ssr: false })
+const Line = dynamic(() => import("recharts").then(m => m.Line), { ssr: false })
+const XAxis = dynamic(() => import("recharts").then(m => m.XAxis), { ssr: false })
+const YAxis = dynamic(() => import("recharts").then(m => m.YAxis), { ssr: false })
+const Tooltip = dynamic(() => import("recharts").then(m => m.Tooltip), { ssr: false })
 
-if (typeof window !== "undefined") {
-  const recharts = require("recharts")
-
-  LineChart = recharts.LineChart
-  Line = recharts.Line
-  XAxis = recharts.XAxis
-  YAxis = recharts.YAxis
-  Tooltip = recharts.Tooltip
-  ResponsiveContainer = recharts.ResponsiveContainer
-}
-
-export default function PriceChart({ history }) {
-
+export default function PriceChart({ history }: { history: { value: number; created_at: string }[] }) {
   if (!history || history.length === 0) return null
-
-  if (typeof window === "undefined") return null
 
   const data = history.map((h) => ({
     value: Number(h.value),
-    date: new Date(h.created_at).toLocaleDateString(),
+    date: new Date(h.created_at).toLocaleDateString("fr-FR"),
   }))
 
   return (
     <div style={{ width: 300, height: 150 }}>
-
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
           <XAxis dataKey="date" hide />
           <YAxis />
-          <Tooltip />
-          <Line dataKey="value" stroke="#8884d8" />
+          <Tooltip formatter={(value: any) => [`${Number(value).toLocaleString("fr-FR")} €`, "Value"]} />
+          <Line dataKey="value" stroke="#c9a84c" />
         </LineChart>
       </ResponsiveContainer>
-
     </div>
   )
 }
