@@ -56,7 +56,7 @@ export default function PortfolioChart({ data }: { data: { date: string; value: 
               color: "#c9a84c",
             }}
             labelStyle={{ color: "#555", fontSize: 10, letterSpacing: "0.1em" }}
-            formatter={(value: number) => [`${value.toLocaleString("fr-FR")} €`, "Value"]}
+            formatter={(value: any) => [`${Number(value).toLocaleString("fr-FR")} €`, "Value"]}
             cursor={{ stroke: "#2a2a2a", strokeWidth: 1 }}
           />
           <Line
