@@ -299,7 +299,7 @@ export default function LoginPage() {
                 <div className="left-stat-lbl">Rendement moyen</div>
               </div>
               <div>
-                <div className="left-stat-val">Finary</div>
+                <div className="left-stat-val">AlphaLux</div>
                 <div className="left-stat-lbl">Pour l'horlogerie</div>
               </div>
             </div>

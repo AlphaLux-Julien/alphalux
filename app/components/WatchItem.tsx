@@ -349,7 +349,7 @@ export default function WatchItem(props: any) {
               )}
               {watch.year && (
                 <div className="meta-item">
-                  <span className="meta-label">Year</span>
+                  <span className="meta-label">Année</span>
                   <span className="meta-value">{watch.year}</span>
                 </div>
               )}

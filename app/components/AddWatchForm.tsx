@@ -19,8 +19,8 @@ export default function AddWatchForm({ addWatch }: { addWatch: (watch: any) => v
 
   const validate = () => {
     const e: Record<string, string> = {}
-    if (!brand.trim()) e.brand = "Required"
-    if (!value.trim()) e.value = "Required"
+    if (!brand.trim()) e.brand = "Obligatoire"
+    if (!value.trim()) e.value = "Obligatoire"
     else if (isNaN(Number(value)) || Number(value) <= 0) e.value = "Must be a positive number"
     if (year && (isNaN(Number(year)) || Number(year) < 1900 || Number(year) > new Date().getFullYear()))
       e.year = `Between 1900 and ${new Date().getFullYear()}`
