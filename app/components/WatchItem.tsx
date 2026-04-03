@@ -164,7 +164,7 @@ export default function WatchItem(props: any) {
           font-size: 9px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #5a5a5a;
+          color: #555;
         }
         .financial-value {
           font-size: 18px;
@@ -317,11 +317,11 @@ export default function WatchItem(props: any) {
             <div className="watch-header">
               <div>
                 <div className="watch-brand">{watch.brand || "—"}</div>
-                <div className="watch-model">{watch.model || "Unknown model"}</div>
+                <div className="watch-model">{watch.model || "Modèle inconnu"}</div>
               </div>
               <div className="card-actions">
                 <button className="btn-ghost" onClick={(e) => { e.stopPropagation(); handleHistory() }}>
-                  {showHistory ? "Close" : "History"}
+                  {showHistory ? "Fermer" : "Historique"}
                 </button>
                 <button
                   className={`btn-delete ${confirmDelete ? "confirm" : ""}`}
@@ -335,7 +335,7 @@ export default function WatchItem(props: any) {
                     }
                   }}
                 >
-                  {confirmDelete ? "Confirm?" : "Delete"}
+                  {confirmDelete ? "Confirmer ?" : "Supprimer"}
                 </button>
               </div>
             </div>
@@ -364,7 +364,7 @@ export default function WatchItem(props: any) {
             <div className="watch-financials">
               <div style={{ display: "flex", gap: "28px" }}>
                 <div className="financial-block">
-                  <span className="financial-label">Purchase</span>
+                  <span className="financial-label">Achat</span>
                   <span className={`financial-value ${!watch.purchase_price ? "neutral" : ""}`}>
                     {watch.purchase_price
                       ? `${Number(watch.purchase_price).toLocaleString("fr-FR")} €`
@@ -372,7 +372,7 @@ export default function WatchItem(props: any) {
                   </span>
                 </div>
                 <div className="financial-block">
-                  <span className="financial-label">Market value</span>
+                  <span className="financial-label">Valeur marché</span>
                   <span className={`financial-value ${!watch.current_value ? "neutral" : ""}`}>
                     {watch.current_value
                       ? `${Number(watch.current_value).toLocaleString("fr-FR")} €`
@@ -401,9 +401,9 @@ export default function WatchItem(props: any) {
         {/* History panel */}
         {showHistory && (
           <div className="history-panel">
-            <div className="history-title">Price history</div>
+            <div className="history-title">Historique des prix</div>
             {history.length === 0 ? (
-              <div className="history-empty">No price history recorded yet.</div>
+              <div className="history-empty">Aucun historique de prix.</div>
             ) : (
               <div className="history-list">
                 {history.map((h: any, i: number) => (

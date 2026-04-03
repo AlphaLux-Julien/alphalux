@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(vercel --version)"
+      "Bash(vercel --version)",
+      "Bash(kill 38988)",
+      "Bash(npm run:*)"
     ]
   }
 }

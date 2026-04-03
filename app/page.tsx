@@ -12,6 +12,8 @@ export default function Home() {
   const [watches, setWatches] = useState<any[]>([])
   const [user, setUser] = useState<any>(null)
   const [portfolioHistory, setPortfolioHistory] = useState<any[]>([])
+  const [refreshing, setRefreshing] = useState(false)
+  const [refreshMsg, setRefreshMsg] = useState("")
 
   // ---------------- TOTALS ----------------
   const totalValue = watches.reduce((sum, w) => sum + Number(w.current_value || 0), 0)
@@ -98,6 +100,36 @@ export default function Home() {
     setPortfolioHistory(Object.keys(map).map((date) => ({ date, value: map[date] })))
   }
 
+  // ---------------- REFRESH MARKET PRICES ----------------
+  const refreshMarketPrices = async () => {
+    setRefreshing(true)
+    setRefreshMsg("")
+    let updated = 0
+    let skipped = 0
+
+    for (const watch of watches) {
+      if (!watch.brand || !watch.reference) { skipped++; continue }
+      try {
+        const res = await fetch(
+          `/api/market-price?brand=${encodeURIComponent(watch.brand)}&reference=${encodeURIComponent(watch.reference)}`
+        )
+        const data = await res.json()
+        if (!data.price) { skipped++; continue }
+
+        await supabase.from("watches").update({ current_value: data.price }).eq("id", watch.id)
+        await supabase.from("price_history").insert([{ watch_id: watch.id, value: data.price, user_id: user.id }])
+        updated++
+      } catch {
+        skipped++
+      }
+    }
+
+    await fetchWatches()
+    await loadPortfolioHistory()
+    setRefreshMsg(`${updated} updated${skipped > 0 ? `, ${skipped} skipped` : ""}`)
+    setRefreshing(false)
+  }
+
   // ---------------- EFFECTS ----------------
   useEffect(() => { getUser() }, [])
   useEffect(() => { if (user) { fetchWatches(); loadPortfolioHistory() } }, [user])
@@ -111,13 +143,13 @@ export default function Home() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-          background: #080808;
+          background: #0a0a0a;
           color: #e8e0cc;
         }
 
         .page {
           min-height: 100vh;
-          background: #080808;
+          background: #0a0a0a;
           font-family: 'Montserrat', sans-serif;
         }
 
@@ -130,7 +162,7 @@ export default function Home() {
           border-bottom: 1px solid #252525;
           position: sticky;
           top: 0;
-          background: rgba(8,8,8,0.95);
+          background: rgba(10,10,10,0.95);
           backdrop-filter: blur(8px);
           z-index: 10;
         }
@@ -162,6 +194,24 @@ export default function Home() {
           border-color: #666;
           color: #aaa;
         }
+        .btn-refresh-all {
+          background: transparent;
+          border: 1px solid #8a7340;
+          color: #c9a84c;
+          padding: 6px 16px;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 10px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          cursor: pointer;
+          border-radius: 1px;
+          transition: all 0.2s;
+        }
+        .btn-refresh-all:hover:not(:disabled) {
+          background: rgba(201,168,76,0.08);
+          border-color: #c9a84c;
+        }
+        .btn-refresh-all:disabled { opacity: 0.4; cursor: not-allowed; }
 
         /* ---- DASHBOARD ---- */
         .dashboard {
@@ -179,8 +229,8 @@ export default function Home() {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 1px;
-          background: #252525;
-          border: 1px solid #252525;
+          background: #2a2a2a;
+          border: 1px solid #1e1e1e;
           margin-bottom: 36px;
         }
         .stat-card {
@@ -272,44 +322,52 @@ export default function Home() {
         {/* HEADER */}
         <header className="header">
           <div className="logo">Alpha<span>Lux</span></div>
-          <button className="btn-logout" onClick={logout}>Sign out</button>
+          <button className="btn-logout" onClick={logout}>Déconnexion</button>
         </header>
 
         {/* DASHBOARD */}
         <section className="dashboard">
-          <div className="dashboard-label">Portfolio overview</div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+            <div className="dashboard-label" style={{ marginBottom: 0 }}>Vue d'ensemble</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              {refreshMsg && <span style={{ fontSize: 10, letterSpacing: "0.1em", color: "#8a7340" }}>{refreshMsg}</span>}
+              <button className="btn-refresh-all" onClick={refreshMarketPrices} disabled={refreshing || watches.length === 0}>
+                {refreshing ? "Récupération..." : "↻ Actualiser les prix"}
+              </button>
+            </div>
+          </div>
 
           <div className="stats-row">
             <div className="stat-card">
-              <span className="stat-label">Collection value</span>
+              <span className="stat-label">Valeur de la collection</span>
               <span className={`stat-value ${totalValue === 0 ? "neutral" : ""}`}>
                 {totalValue.toLocaleString("fr-FR")} €
               </span>
-              <span className="stat-sub">{watches.length} {watches.length > 1 ? "pieces" : "piece"}</span>
+              <span className="stat-sub">{watches.length} {watches.length > 1 ? "pièces" : "pièce"}</span>
             </div>
 
             <div className="stat-card">
-              <span className="stat-label">Total invested</span>
+              <span className="stat-label">Total investi</span>
               <span className={`stat-value ${totalCost === 0 ? "neutral" : ""}`}>
                 {totalCost.toLocaleString("fr-FR")} €
               </span>
-              <span className="stat-sub">purchase cost</span>
+              <span className="stat-sub">coût d'acquisition</span>
             </div>
 
             <div className="stat-card">
-              <span className="stat-label">Total profit</span>
+              <span className="stat-label">Bénéfice total</span>
               <span className={`stat-value ${totalProfit === 0 ? "neutral" : ""}`}>
                 {totalProfit > 0 ? "+" : ""}{totalProfit.toLocaleString("fr-FR")} €
               </span>
               {profitPct && (
                 <span className={`stat-sub ${isPositive ? "positive" : "negative"}`}>
-                  {isPositive ? "▲" : "▼"} {profitPct}% vs cost
+                  {isPositive ? "▲" : "▼"} {profitPct}% vs coût
                 </span>
               )}
             </div>
 
             <div className="stat-card">
-              <span className="stat-label">Best performer</span>
+              <span className="stat-label">Meilleure performance</span>
               {watches.length > 0 ? (() => {
                 const best = watches.reduce((prev, curr) =>
                   (Number(curr.current_value || 0) - Number(curr.purchase_price || 0)) >
@@ -333,7 +391,7 @@ export default function Home() {
           </div>
 
           <div className="chart-section">
-            <div className="chart-title">Portfolio value over time</div>
+            <div className="chart-title">Évolution du portefeuille</div>
             <PortfolioChart data={portfolioHistory} />
           </div>
         </section>
@@ -343,7 +401,7 @@ export default function Home() {
 
           {/* ADD FORM */}
           <div>
-            <div className="section-title">Add a watch</div>
+            <div className="section-title">Ajouter une montre</div>
             <AddWatchForm addWatch={addWatch} />
             {message && <p style={{ color: "#c9a84c", fontSize: 12, marginTop: 12 }}>{message}</p>}
           </div>
@@ -351,10 +409,10 @@ export default function Home() {
           {/* WATCH LIST */}
           <div className="watch-list-section">
             <div className="section-title">
-              Collection · {watches.length} {watches.length > 1 ? "pieces" : "piece"}
+              Collection · {watches.length} {watches.length > 1 ? "pièces" : "pièce"}
             </div>
             {watches.length === 0 ? (
-              <div className="watch-empty">Your collection is empty</div>
+              <div className="watch-empty">Votre collection est vide</div>
             ) : (
               <div className="watch-list">
                 {watches.map((w) => (

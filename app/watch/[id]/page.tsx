@@ -12,6 +12,44 @@ export default function WatchDetail() {
   const [history, setHistory] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
+  const [refreshMsg, setRefreshMsg] = useState("")
+
+  const handleRefreshPrice = async () => {
+    setRefreshing(true)
+    setRefreshMsg("")
+    try {
+      const params = new URLSearchParams({
+        brand: watch.brand || "",
+        ...(watch.model && { model: watch.model }),
+        ...(watch.reference && { reference: watch.reference }),
+      })
+      const res = await fetch(`/api/market-price?${params}`)
+      const data = await res.json()
+
+      if (!res.ok || !data.price) {
+        setRefreshMsg(data.error || "No listings found on eBay")
+        return
+      }
+
+      const newValue = Math.round(data.price)
+      const { data: userData } = await supabase.auth.getUser()
+      await supabase.from("watches").update({ current_value: newValue }).eq("id", watch.id)
+      await supabase.from("price_history").insert([{
+        watch_id: watch.id,
+        user_id: userData.user?.id,
+        value: newValue,
+      }])
+
+      setWatch((prev: any) => ({ ...prev, current_value: newValue }))
+      setHistory((prev) => [...prev, { value: newValue, created_at: new Date().toISOString() }])
+      setRefreshMsg(`Updated — ${newValue.toLocaleString("fr-FR")} € (${data.count} listings)`)
+    } catch {
+      setRefreshMsg("Request failed")
+    } finally {
+      setRefreshing(false)
+    }
+  }
 
   useEffect(() => {
     const load = async () => {
@@ -103,6 +141,15 @@ export default function WatchDetail() {
         }
         .btn-del:hover { border-color: rgba(220,80,80,0.4); color: #dc5050; }
         .btn-del.confirm { border-color: rgba(220,80,80,0.6); color: #dc5050; background: rgba(220,80,80,0.06); }
+        .btn-refresh {
+          background: transparent; border: 1px solid #8a7340; color: #c9a84c;
+          padding: 6px 16px; font-family: 'Montserrat', sans-serif;
+          font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+          cursor: pointer; border-radius: 1px; transition: all 0.2s;
+        }
+        .btn-refresh:hover:not(:disabled) { background: rgba(201,168,76,0.08); border-color: #c9a84c; }
+        .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
+        .refresh-msg { font-size: 10px; letter-spacing: 0.1em; padding: 8px 48px; color: #8a7340; border-bottom: 1px solid #111; }
 
         /* Hero */
         .hero { display: grid; grid-template-columns: 480px 1fr; min-height: 420px; }
@@ -176,12 +223,17 @@ export default function WatchDetail() {
         <header className="detail-header">
           <div className="logo" onClick={() => router.push("/")}>Alpha<span>Lux</span></div>
           <div className="header-actions">
+            <button className="btn-refresh" onClick={handleRefreshPrice} disabled={refreshing}>
+              {refreshing ? "Fetching..." : "↻ Market price"}
+            </button>
             <button className="btn-back" onClick={() => router.push("/")}>← Collection</button>
             <button className={`btn-del${confirmDelete ? " confirm" : ""}`} onClick={handleDelete}>
               {confirmDelete ? "Confirm delete?" : "Delete"}
             </button>
           </div>
         </header>
+
+        {refreshMsg && <div className="refresh-msg">{refreshMsg}</div>}
 
         {/* Hero */}
         <div className="hero">

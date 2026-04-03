@@ -290,7 +290,7 @@ export default function LoginPage() {
               tracked.
             </div>
             <div className="left-sub">
-              Portfolio · Valorisation · Performance<br />
+              Patrimoine · Clarté · Performance<br />
               Montres & maroquinerie de prestige
             </div>
             <div className="left-stats">
