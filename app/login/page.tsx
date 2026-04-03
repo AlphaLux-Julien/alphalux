@@ -285,9 +285,8 @@ export default function LoginPage() {
 
           <div className="left-center">
             <div className="left-tagline">
-              Your collection,<br />
-              <em>masterfully</em><br />
-              tracked.
+              Votre collection,<br />
+              <em>maîtrisée.</em>
             </div>
             <div className="left-sub">
               Patrimoine · Clarté · Performance<br />
@@ -299,8 +298,8 @@ export default function LoginPage() {
                 <div className="left-stat-lbl">Rendement moyen</div>
               </div>
               <div>
-                <div className="left-stat-val">AlphaLux</div>
-                <div className="left-stat-lbl">Pour l'horlogerie</div>
+                <div className="left-stat-val" style={{ fontSize: 14, letterSpacing: "0.08em" }}>Patrimoine · Clarté · Performance</div>
+                <div className="left-stat-lbl">Notre promesse</div>
               </div>
             </div>
           </div>
@@ -333,14 +332,14 @@ export default function LoginPage() {
           <div className="form-card">
 
             <div className="form-eyebrow">
-              {mode === "login" ? "Welcome back" : "Create account"}
+              {mode === "login" ? "Bienvenue" : "Créer un compte"}
             </div>
             <div className="form-title">
-              {mode === "login" ? "Sign in" : "Join AlphaLux"}
+              {mode === "login" ? "Connexion" : "Rejoindre AlphaLux"}
             </div>
 
             <div className="field">
-              <label className="field-label">Email address</label>
+              <label className="field-label">Adresse email</label>
               <input
                 className="field-input"
                 type="email"
@@ -352,7 +351,7 @@ export default function LoginPage() {
             </div>
 
             <div className="field">
-              <label className="field-label">Password</label>
+              <label className="field-label">Mot de passe</label>
               <input
                 className="field-input"
                 type="password"
@@ -376,18 +375,18 @@ export default function LoginPage() {
               onClick={handleSubmit}
               disabled={loading}
             >
-              {loading ? "Please wait..." : mode === "login" ? "Sign in" : "Create account"}
+              {loading ? "Veuillez patienter..." : mode === "login" ? "Se connecter" : "Créer un compte"}
             </button>
 
             <div className="toggle-row">
               <span className="toggle-text">
-                {mode === "login" ? "No account yet?" : "Already have an account?"}
+                {mode === "login" ? "Pas encore de compte ?" : "Déjà un compte ?"}
               </span>
               <button
                 className="toggle-btn"
                 onClick={() => { setMode(mode === "login" ? "signup" : "login"); setMessage("") }}
               >
-                {mode === "login" ? "Sign up" : "Sign in"}
+                {mode === "login" ? "S'inscrire" : "Se connecter"}
               </button>
             </div>
 
