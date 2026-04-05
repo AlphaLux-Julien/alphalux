@@ -33,8 +33,8 @@ export default function WatchItem(props: any) {
 
         .watch-card {
           font-family: 'Montserrat', sans-serif;
-          background: #111;
-          border: 1px solid #2a2a2a;
+          background: #161616;
+          border: 1px solid #2e2e2e;
           border-radius: 2px;
           overflow: hidden;
           transition: border-color 0.3s ease, transform 0.3s ease;
@@ -65,7 +65,7 @@ export default function WatchItem(props: any) {
 
         .image-side {
           position: relative;
-          background: #111;
+          background: #161616;
           overflow: hidden;
         }
         .image-side img {
@@ -86,7 +86,7 @@ export default function WatchItem(props: any) {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+          background: linear-gradient(135deg, #161616 0%, #222 100%);
         }
         .image-placeholder svg {
           opacity: 0.15;
@@ -153,7 +153,7 @@ export default function WatchItem(props: any) {
           justify-content: space-between;
           gap: 16px;
           padding-top: 12px;
-          border-top: 1px solid #282828;
+          border-top: 1px solid #2e2e2e;
         }
         .financial-block {
           display: flex;
@@ -164,7 +164,7 @@ export default function WatchItem(props: any) {
           font-size: 9px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #555;
+          color: #888;
         }
         .financial-value {
           font-size: 18px;
@@ -198,8 +198,8 @@ export default function WatchItem(props: any) {
         }
         .profit-badge.zero {
           background: rgba(255,255,255,0.03);
-          border: 1px solid #222;
-          color: #555;
+          border: 1px solid #2e2e2e;
+          color: #888;
         }
 
         .card-actions {
@@ -248,9 +248,9 @@ export default function WatchItem(props: any) {
         }
 
         .history-panel {
-          border-top: 1px solid #282828;
+          border-top: 1px solid #2e2e2e;
           padding: 16px 28px;
-          background: #0d0d0d;
+          background: #161616;
         }
         .history-title {
           font-size: 9px;
@@ -269,7 +269,7 @@ export default function WatchItem(props: any) {
           justify-content: space-between;
           align-items: center;
           padding: 6px 0;
-          border-bottom: 1px solid #1e1e1e;
+          border-bottom: 1px solid #2e2e2e;
         }
         .history-date {
           font-size: 11px;
@@ -283,7 +283,7 @@ export default function WatchItem(props: any) {
         }
         .history-empty {
           font-size: 11px;
-          color: #555;
+          color: #888;
           font-style: italic;
         }
       `}</style>

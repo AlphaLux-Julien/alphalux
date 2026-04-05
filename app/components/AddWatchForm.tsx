@@ -104,12 +104,12 @@ export default function AddWatchForm({ addWatch }: { addWatch: (watch: any) => v
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
-        .form-wrap { font-family:'Montserrat',sans-serif; background:#111; border:1px solid #2a2a2a; padding:28px; }
+        .form-wrap { font-family:'Montserrat',sans-serif; background:#161616; border:1px solid #2e2e2e; padding:28px; }
         .form-field { margin-bottom:18px; }
         .form-label { display:flex; justify-content:space-between; align-items:center; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:#666; margin-bottom:6px; }
         .form-label .req { color:#c9a84c; }
         .form-label .err-msg { color:#dc5050; font-size:9px; letter-spacing:.05em; text-transform:none; }
-        .form-input { width:100%; background:#0d0d0d; border:1px solid #2a2a2a; border-radius:1px; padding:10px 14px; font-family:'Montserrat',sans-serif; font-size:12px; color:#d8d0c0; letter-spacing:.04em; outline:none; transition:border-color .2s; box-sizing:border-box; -moz-appearance:textfield; }
+        .form-input { width:100%; background:#1a1a1a; border:1px solid #2e2e2e; border-radius:1px; padding:10px 14px; font-family:'Montserrat',sans-serif; font-size:12px; color:#d8d0c0; letter-spacing:.04em; outline:none; transition:border-color .2s; box-sizing:border-box; -moz-appearance:textfield; }
         .form-input::-webkit-outer-spin-button,.form-input::-webkit-inner-spin-button { -webkit-appearance:none; }
         .form-input::placeholder { color:#444; }
         .form-input:focus { border-color:#8a7340; }
@@ -121,12 +121,12 @@ export default function AddWatchForm({ addWatch }: { addWatch: (watch: any) => v
         .upload-text { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#666; }
         .upload-sub { font-size:9px; color:#444; margin-top:4px; letter-spacing:.08em; }
         .upload-loading { font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:#8a7340; }
-        .image-preview-wrap { position:relative; width:100%; height:140px; border:1px solid #2a2a2a; overflow:hidden; border-radius:1px; }
+        .image-preview-wrap { position:relative; width:100%; height:140px; border:1px solid #2e2e2e; overflow:hidden; border-radius:1px; }
         .image-preview-wrap img { width:100%; height:100%; object-fit:cover; filter:grayscale(20%); }
         .image-remove { position:absolute; top:8px; right:8px; background:rgba(0,0,0,.8); border:1px solid #444; color:#999; width:24px; height:24px; border-radius:1px; cursor:pointer; font-size:12px; display:flex; align-items:center; justify-content:center; transition:all .2s; }
         .image-remove:hover { border-color:#dc5050; color:#dc5050; }
         .image-ok { position:absolute; bottom:8px; left:8px; background:rgba(0,0,0,.7); border:1px solid rgba(74,179,100,.3); color:#4ab364; font-size:9px; letter-spacing:.12em; text-transform:uppercase; padding:3px 8px; border-radius:1px; }
-        .form-divider { height:1px; background:#2a2a2a; margin:22px 0; }
+        .form-divider { height:1px; background:#2e2e2e; margin:22px 0; }
         .btn-submit { width:100%; background:transparent; border:1px solid #8a7340; color:#c9a84c; padding:12px; font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:.25em; text-transform:uppercase; cursor:pointer; border-radius:1px; transition:all .2s; }
         .btn-submit:hover { background:rgba(201,168,76,.08); border-color:#c9a84c; }
         .btn-submit.submitted { border-color:#4ab364; color:#4ab364; }

@@ -143,13 +143,13 @@ export default function Home() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-          background: #0a0a0a;
+          background: #0f0f0f;
           color: #e8e0cc;
         }
 
         .page {
           min-height: 100vh;
-          background: #0a0a0a;
+          background: #0f0f0f;
           font-family: 'Montserrat', sans-serif;
         }
 
@@ -159,10 +159,10 @@ export default function Home() {
           align-items: center;
           justify-content: space-between;
           padding: 24px 48px;
-          border-bottom: 1px solid #252525;
+          border-bottom: 1px solid #2e2e2e;
           position: sticky;
           top: 0;
-          background: rgba(10,10,10,0.95);
+          background: rgba(15,15,15,0.95);
           backdrop-filter: blur(8px);
           z-index: 10;
         }
@@ -216,7 +216,7 @@ export default function Home() {
         /* ---- DASHBOARD ---- */
         .dashboard {
           padding: 40px 48px;
-          border-bottom: 1px solid #252525;
+          border-bottom: 1px solid #2e2e2e;
         }
         .dashboard-label {
           font-size: 9px;
@@ -229,12 +229,12 @@ export default function Home() {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 1px;
-          background: #2a2a2a;
-          border: 1px solid #1e1e1e;
+          background: #2e2e2e;
+          border: 1px solid #2e2e2e;
           margin-bottom: 36px;
         }
         .stat-card {
-          background: #111;
+          background: #181818;
           padding: 24px 28px;
           display: flex;
           flex-direction: column;
@@ -259,7 +259,7 @@ export default function Home() {
         }
         .stat-sub {
           font-size: 11px;
-          color: #5a5a5a;
+          color: #888;
           letter-spacing: 0.05em;
         }
         .stat-sub.positive { color: #4ab364; }
@@ -267,8 +267,8 @@ export default function Home() {
 
         /* ---- CHART SECTION ---- */
         .chart-section {
-          background: #0d0d0d;
-          border: 1px solid #252525;
+          background: #161616;
+          border: 1px solid #2e2e2e;
           padding: 24px 28px;
         }
         .chart-title {
@@ -297,14 +297,14 @@ export default function Home() {
           color: #666;
           margin-bottom: 16px;
           padding-bottom: 12px;
-          border-bottom: 1px solid #252525;
+          border-bottom: 1px solid #2e2e2e;
         }
         .watch-list {
           display: flex;
           flex-direction: column;
           gap: 1px;
           background: #252525;
-          border: 1px solid #252525;
+          border: 1px solid #2e2e2e;
         }
         .watch-empty {
           padding: 48px;
@@ -312,8 +312,8 @@ export default function Home() {
           font-size: 11px;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #555;
-          border: 1px solid #252525;
+          color: #888;
+          border: 1px solid #2e2e2e;
         }
       `}</style>
 
