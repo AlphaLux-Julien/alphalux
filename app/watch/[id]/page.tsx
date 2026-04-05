@@ -109,14 +109,14 @@ export default function WatchDetail() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Montserrat:wght@300;400;500;600&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #080808; }
+        body { background: #0f0f0f; }
 
-        .detail-page { min-height: 100vh; background: #080808; font-family: 'Montserrat', sans-serif; color: #e8e0cc; }
+        .detail-page { min-height: 100vh; background: #0f0f0f; font-family: 'Montserrat', sans-serif; color: #e8e0cc; }
 
         .detail-header {
           display: flex; align-items: center; justify-content: space-between;
-          padding: 24px 48px; border-bottom: 1px solid #111;
-          position: sticky; top: 0; background: rgba(8,8,8,0.95);
+          padding: 24px 48px; border-bottom: 1px solid #2e2e2e;
+          position: sticky; top: 0; background: rgba(15,15,15,0.95);
           backdrop-filter: blur(8px); z-index: 10;
         }
         .logo {
@@ -127,19 +127,19 @@ export default function WatchDetail() {
         .logo span { color: #c9a84c; }
         .header-actions { display: flex; gap: 10px; }
         .btn-back {
-          background: transparent; border: 1px solid #1e1e1e; color: #555;
+          background: transparent; border: 1px solid #444; color: #ccc;
           padding: 6px 16px; font-family: 'Montserrat', sans-serif;
           font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
           cursor: pointer; border-radius: 1px; transition: all 0.2s;
         }
-        .btn-back:hover { border-color: #444; color: #888; }
+        .btn-back:hover { border-color: #888; color: #fff; }
         .btn-del {
-          background: transparent; border: 1px solid #1e1e1e; color: #333;
+          background: transparent; border: 1px solid #444; color: #ccc;
           padding: 6px 16px; font-family: 'Montserrat', sans-serif;
           font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
           cursor: pointer; border-radius: 1px; transition: all 0.2s;
         }
-        .btn-del:hover { border-color: rgba(220,80,80,0.4); color: #dc5050; }
+        .btn-del:hover { border-color: rgba(220,80,80,0.6); color: #dc5050; }
         .btn-del.confirm { border-color: rgba(220,80,80,0.6); color: #dc5050; background: rgba(220,80,80,0.06); }
         .btn-refresh {
           background: transparent; border: 1px solid #8a7340; color: #c9a84c;
@@ -153,18 +153,18 @@ export default function WatchDetail() {
 
         /* Hero */
         .hero { display: grid; grid-template-columns: 480px 1fr; min-height: 420px; }
-        .hero-image { background: #0d0d0d; position: relative; overflow: hidden; }
+        .hero-image { background: #161616; position: relative; overflow: hidden; }
         .hero-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%); }
         .hero-placeholder {
           width: 100%; height: 100%; min-height: 420px;
           display: flex; align-items: center; justify-content: center;
-          background: #0d0d0d;
+          background: #161616;
         }
-        .hero-info { padding: 48px; display: flex; flex-direction: column; justify-content: space-between; border-left: 1px solid #111; }
+        .hero-info { padding: 48px; display: flex; flex-direction: column; justify-content: space-between; border-left: 1px solid #2e2e2e; }
 
         .watch-eyebrow {
           font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
-          color: #333; margin-bottom: 12px;
+          color: #aaa; margin-bottom: 12px;
         }
         .watch-brand-lg {
           font-family: 'Cormorant Garamond', serif; font-size: 52px;
@@ -173,48 +173,48 @@ export default function WatchDetail() {
         }
         .watch-model-lg {
           font-family: 'Cormorant Garamond', serif; font-size: 22px;
-          font-style: italic; color: #7a7060; letter-spacing: 0.05em; margin-top: 8px;
+          font-style: italic; color: #bbb; letter-spacing: 0.05em; margin-top: 8px;
         }
 
         .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .meta-block { display: flex; flex-direction: column; gap: 4px; }
-        .meta-lbl { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #2a2a2a; }
-        .meta-val { font-size: 13px; color: #8a8070; letter-spacing: 0.05em; }
+        .meta-lbl { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #999; }
+        .meta-val { font-size: 13px; color: #ccc; letter-spacing: 0.05em; }
 
         /* Stats strip */
         .stats-strip {
           display: grid; grid-template-columns: repeat(3, 1fr);
-          gap: 1px; background: #111; border-top: 1px solid #111; border-bottom: 1px solid #111;
+          gap: 1px; background: #2e2e2e; border-top: 1px solid #2e2e2e; border-bottom: 1px solid #2e2e2e;
         }
-        .stat-block { background: #0a0a0a; padding: 28px 32px; }
-        .stat-lbl { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #2a2a2a; margin-bottom: 8px; }
+        .stat-block { background: #161616; padding: 28px 32px; }
+        .stat-lbl { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #999; margin-bottom: 8px; }
         .stat-val {
           font-family: 'Cormorant Garamond', serif; font-size: 36px;
           font-weight: 300; color: #c9a84c; letter-spacing: 0.02em; line-height: 1;
         }
-        .stat-val.neutral { color: #333; }
+        .stat-val.neutral { color: #aaa; }
         .stat-sub { font-size: 11px; margin-top: 6px; }
         .positive { color: #4ab364; }
         .negative { color: #dc5050; }
 
         /* Chart section */
-        .chart-section { padding: 40px 48px; border-bottom: 1px solid #111; }
-        .section-lbl { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: #2a2a2a; margin-bottom: 20px; }
+        .chart-section { padding: 40px 48px; border-bottom: 1px solid #2e2e2e; }
+        .section-lbl { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: #999; margin-bottom: 20px; }
 
         /* History table */
         .history-section { padding: 40px 48px; }
         .history-table { width: 100%; border-collapse: collapse; }
         .history-table th {
           font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-          color: #2a2a2a; padding: 10px 0; border-bottom: 1px solid #111;
+          color: #999; padding: 10px 0; border-bottom: 1px solid #2e2e2e;
           text-align: left; font-weight: 400;
         }
         .history-table td {
-          padding: 12px 0; border-bottom: 1px solid #0d0d0d;
-          font-size: 12px; color: #5a5040; letter-spacing: 0.05em;
+          padding: 12px 0; border-bottom: 1px solid #1e1e1e;
+          font-size: 12px; color: #ccc; letter-spacing: 0.05em;
         }
-        .history-table td:last-child { text-align: right; color: #7a6a40; }
-        .history-empty { font-size: 11px; color: #222; font-style: italic; padding: 20px 0; }
+        .history-table td:last-child { text-align: right; color: #c9a84c; }
+        .history-empty { font-size: 11px; color: #aaa; font-style: italic; padding: 20px 0; }
       `}</style>
 
       <div className="detail-page">
@@ -292,14 +292,14 @@ export default function WatchDetail() {
             <div className={`stat-val${!watch.purchase_price ? " neutral" : ""}`}>
               {watch.purchase_price ? `${Number(watch.purchase_price).toLocaleString("fr-FR")} €` : "—"}
             </div>
-            <div className="stat-sub" style={{ color: "#2a2a2a" }}>acquisition cost</div>
+            <div className="stat-sub" style={{ color: "#aaa" }}>acquisition cost</div>
           </div>
           <div className="stat-block">
             <div className="stat-lbl">Market value</div>
             <div className={`stat-val${!watch.current_value ? " neutral" : ""}`}>
               {watch.current_value ? `${Number(watch.current_value).toLocaleString("fr-FR")} €` : "—"}
             </div>
-            <div className="stat-sub" style={{ color: "#2a2a2a" }}>estimated today</div>
+            <div className="stat-sub" style={{ color: "#aaa" }}>estimated today</div>
           </div>
           <div className="stat-block">
             <div className="stat-lbl">Performance</div>

@@ -17,13 +17,13 @@ export default function PortfolioChart({ data }: { data: { date: string; value: 
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      border: "1px solid #1a1a1a",
+      border: "1px solid #2e2e2e",
       borderRadius: 2,
       fontFamily: "'Montserrat', sans-serif",
       fontSize: 11,
       letterSpacing: "0.15em",
       textTransform: "uppercase",
-      color: "#2a2a2a",
+      color: "#888",
     }}>
       No history yet
     </div>
@@ -35,12 +35,12 @@ export default function PortfolioChart({ data }: { data: { date: string; value: 
         <LineChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
           <XAxis
             dataKey="date"
-            tick={{ fill: "#3a3a3a", fontSize: 10, fontFamily: "Montserrat, sans-serif" }}
-            axisLine={{ stroke: "#1a1a1a" }}
+            tick={{ fill: "#888", fontSize: 10, fontFamily: "Montserrat, sans-serif" }}
+            axisLine={{ stroke: "#2e2e2e" }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: "#3a3a3a", fontSize: 10, fontFamily: "Montserrat, sans-serif" }}
+            tick={{ fill: "#888", fontSize: 10, fontFamily: "Montserrat, sans-serif" }}
             axisLine={false}
             tickLine={false}
             width={60}
@@ -55,7 +55,7 @@ export default function PortfolioChart({ data }: { data: { date: string; value: 
               fontSize: 11,
               color: "#c9a84c",
             }}
-            labelStyle={{ color: "#555", fontSize: 10, letterSpacing: "0.1em" }}
+            labelStyle={{ color: "#aaa", fontSize: 10, letterSpacing: "0.1em" }}
             formatter={(value: any) => [`${Number(value).toLocaleString("fr-FR")} €`, "Value"]}
             cursor={{ stroke: "#2a2a2a", strokeWidth: 1 }}
           />

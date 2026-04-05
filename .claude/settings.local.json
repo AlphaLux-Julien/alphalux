@@ -4,7 +4,10 @@
       "Bash(vercel --version)",
       "Bash(kill 38988)",
       "Bash(npm run:*)",
-      "Bash(kill 75575)"
+      "Bash(kill 75575)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
