@@ -106,20 +106,20 @@ export default function AddWatchForm({ addWatch }: { addWatch: (watch: any) => v
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
         .form-wrap { font-family:'Montserrat',sans-serif; background:#161616; border:1px solid #2e2e2e; padding:28px; }
         .form-field { margin-bottom:18px; }
-        .form-label { display:flex; justify-content:space-between; align-items:center; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:#666; margin-bottom:6px; }
+        .form-label { display:flex; justify-content:space-between; align-items:center; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:#999; margin-bottom:6px; }
         .form-label .req { color:#c9a84c; }
         .form-label .err-msg { color:#dc5050; font-size:9px; letter-spacing:.05em; text-transform:none; }
         .form-input { width:100%; background:#1a1a1a; border:1px solid #2e2e2e; border-radius:1px; padding:10px 14px; font-family:'Montserrat',sans-serif; font-size:12px; color:#d8d0c0; letter-spacing:.04em; outline:none; transition:border-color .2s; box-sizing:border-box; -moz-appearance:textfield; }
         .form-input::-webkit-outer-spin-button,.form-input::-webkit-inner-spin-button { -webkit-appearance:none; }
-        .form-input::placeholder { color:#444; }
+        .form-input::placeholder { color:#555; }
         .form-input:focus { border-color:#8a7340; }
         .form-input.has-error { border-color:rgba(220,80,80,.5); }
         .upload-zone { width:100%; border:1px dashed #2a2a2a; border-radius:1px; padding:20px; text-align:center; cursor:pointer; transition:border-color .2s,background .2s; background:#0d0d0d; box-sizing:border-box; }
         .upload-zone:hover { border-color:#8a7340; background:rgba(201,168,76,.03); }
         .upload-zone.has-error { border-color:rgba(220,80,80,.5); }
-        .upload-icon { color:#555; font-size:22px; margin-bottom:6px; }
-        .upload-text { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#666; }
-        .upload-sub { font-size:9px; color:#444; margin-top:4px; letter-spacing:.08em; }
+        .upload-icon { color:#999; font-size:22px; margin-bottom:6px; }
+        .upload-text { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#999; }
+        .upload-sub { font-size:9px; color:#555; margin-top:4px; letter-spacing:.08em; }
         .upload-loading { font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:#8a7340; }
         .image-preview-wrap { position:relative; width:100%; height:140px; border:1px solid #2e2e2e; overflow:hidden; border-radius:1px; }
         .image-preview-wrap img { width:100%; height:100%; object-fit:cover; filter:grayscale(20%); }

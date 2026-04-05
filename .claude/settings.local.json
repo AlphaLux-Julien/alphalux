@@ -3,7 +3,8 @@
     "allow": [
       "Bash(vercel --version)",
       "Bash(kill 38988)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(kill 75575)"
     ]
   }
 }

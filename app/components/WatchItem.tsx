@@ -119,7 +119,7 @@ export default function WatchItem(props: any) {
           font-family: 'Cormorant Garamond', serif;
           font-size: 15px;
           font-style: italic;
-          color: #7a7060;
+          color: #bbb;
           letter-spacing: 0.05em;
           margin-top: 3px;
         }
@@ -138,12 +138,12 @@ export default function WatchItem(props: any) {
           font-size: 9px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #666;
+          color: #999;
           font-weight: 500;
         }
         .meta-value {
           font-size: 12px;
-          color: #8a8070;
+          color: #ccc;
           letter-spacing: 0.05em;
         }
 
@@ -164,7 +164,7 @@ export default function WatchItem(props: any) {
           font-size: 9px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #888;
+          color: #999;
         }
         .financial-value {
           font-size: 18px;
@@ -173,7 +173,7 @@ export default function WatchItem(props: any) {
           letter-spacing: 0.04em;
         }
         .financial-value.neutral {
-          color: #666;
+          color: #aaa;
         }
 
         .profit-badge {
@@ -199,7 +199,7 @@ export default function WatchItem(props: any) {
         .profit-badge.zero {
           background: rgba(255,255,255,0.03);
           border: 1px solid #2e2e2e;
-          color: #888;
+          color: #bbb;
         }
 
         .card-actions {
@@ -256,7 +256,7 @@ export default function WatchItem(props: any) {
           font-size: 9px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #666;
+          color: #aaa;
           margin-bottom: 12px;
         }
         .history-list {
@@ -273,7 +273,7 @@ export default function WatchItem(props: any) {
         }
         .history-date {
           font-size: 11px;
-          color: #666;
+          color: #aaa;
           letter-spacing: 0.05em;
         }
         .history-price {
@@ -283,7 +283,7 @@ export default function WatchItem(props: any) {
         }
         .history-empty {
           font-size: 11px;
-          color: #888;
+          color: #bbb;
           font-style: italic;
         }
       `}</style>

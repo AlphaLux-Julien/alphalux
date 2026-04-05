@@ -222,7 +222,7 @@ export default function Home() {
           font-size: 9px;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #666;
+          color: #aaa;
           margin-bottom: 24px;
         }
         .stats-row {
@@ -244,7 +244,7 @@ export default function Home() {
           font-size: 9px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #666;
+          color: #999;
         }
         .stat-value {
           font-family: 'Cormorant Garamond', serif;
@@ -259,7 +259,7 @@ export default function Home() {
         }
         .stat-sub {
           font-size: 11px;
-          color: #888;
+          color: #aaa;
           letter-spacing: 0.05em;
         }
         .stat-sub.positive { color: #4ab364; }
@@ -275,7 +275,7 @@ export default function Home() {
           font-size: 9px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #666;
+          color: #aaa;
           margin-bottom: 16px;
         }
 
@@ -294,7 +294,7 @@ export default function Home() {
           font-size: 9px;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #666;
+          color: #aaa;
           margin-bottom: 16px;
           padding-bottom: 12px;
           border-bottom: 1px solid #2e2e2e;
@@ -312,7 +312,7 @@ export default function Home() {
           font-size: 11px;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: #888;
+          color: #aaa;
           border: 1px solid #2e2e2e;
         }
       `}</style>
