@@ -3,81 +3,42 @@
 import { useState } from "react"
 import { supabase } from "../../lib/supabase"
 
-export default function LoginPage() {
-  const [email, setEmail] = useState("")
+export default function ResetPasswordPage() {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [message, setMessage] = useState("")
   const [isError, setIsError] = useState(false)
-  const [mode, setMode] = useState<"login" | "signup" | "reset">("login")
   const [loading, setLoading] = useState(false)
-
-  const switchMode = (next: "login" | "signup" | "reset") => {
-    setMode(next)
-    setMessage("")
-    setPassword("")
-    setConfirmPassword("")
-  }
+  const [done, setDone] = useState(false)
 
   const handleSubmit = async () => {
-    if (mode === "reset") {
-      if (!email) {
-        setMessage("Veuillez entrer votre adresse email.")
-        setIsError(true)
-        return
-      }
-      setLoading(true)
-      setMessage("")
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "https://alphalux.vercel.app/reset-password",
-      })
-      if (error) {
-        setMessage(error.message)
-        setIsError(true)
-      } else {
-        setMessage("Un email de réinitialisation a été envoyé.")
-        setIsError(false)
-      }
-      setLoading(false)
-      return
-    }
-
-    if (!email || !password) {
+    if (!password || !confirmPassword) {
       setMessage("Veuillez remplir tous les champs.")
       setIsError(true)
       return
     }
-    if (mode === "signup" && password !== confirmPassword) {
+    if (password !== confirmPassword) {
       setMessage("Les mots de passe ne correspondent pas.")
+      setIsError(true)
+      return
+    }
+    if (password.length < 6) {
+      setMessage("Le mot de passe doit contenir au moins 6 caractères.")
       setIsError(true)
       return
     }
     setLoading(true)
     setMessage("")
-
-    if (mode === "login") {
-      const { error } = await supabase.auth.signInWithPassword({ email, password })
-      if (error) {
-        setMessage(error.message)
-        setIsError(true)
-      } else {
-        window.location.href = "/"
-      }
+    const { error } = await supabase.auth.updateUser({ password })
+    if (error) {
+      setMessage(error.message)
+      setIsError(true)
     } else {
-      const { error } = await supabase.auth.signUp({ email, password })
-      if (error) {
-        setMessage(error.message)
-        setIsError(true)
-      } else {
-        setMessage("Vérifiez votre email pour confirmer votre compte.")
-        setIsError(false)
-      }
+      setMessage("Mot de passe mis à jour avec succès.")
+      setIsError(false)
+      setDone(true)
     }
     setLoading(false)
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") handleSubmit()
   }
 
   return (
@@ -86,10 +47,9 @@ export default function LoginPage() {
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
         body { background: #080808; }
 
-        .login-page {
+        .reset-page {
           min-height: 100vh;
           background: #080808;
           display: grid;
@@ -97,7 +57,6 @@ export default function LoginPage() {
           font-family: 'Montserrat', sans-serif;
         }
 
-        /* ---- LEFT PANEL ---- */
         .left-panel {
           display: flex;
           flex-direction: column;
@@ -150,26 +109,6 @@ export default function LoginPage() {
           line-height: 1.8;
         }
 
-        .left-stats {
-          display: flex;
-          gap: 40px;
-        }
-        .left-stat-val {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 28px;
-          font-weight: 300;
-          color: #c9a84c;
-          letter-spacing: 0.02em;
-        }
-        .left-stat-lbl {
-          font-size: 9px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #3a3a3a;
-          margin-top: 4px;
-        }
-
-        /* Watch SVG decoration */
         .watch-deco {
           position: absolute;
           right: -60px;
@@ -178,7 +117,6 @@ export default function LoginPage() {
           opacity: 0.04;
         }
 
-        /* ---- RIGHT PANEL ---- */
         .right-panel {
           display: flex;
           align-items: center;
@@ -276,15 +214,13 @@ export default function LoginPage() {
           cursor: not-allowed;
         }
 
-        .toggle-row {
-          text-align: center;
+        .divider {
+          height: 1px;
+          background: #1e1e1e;
+          margin: 28px 0;
         }
-        .toggle-text {
-          font-size: 11px;
-          color: #444;
-          letter-spacing: 0.05em;
-        }
-        .toggle-btn {
+
+        .back-btn {
           background: none;
           border: none;
           color: #8a7340;
@@ -293,25 +229,21 @@ export default function LoginPage() {
           letter-spacing: 0.05em;
           cursor: pointer;
           padding: 0;
-          margin-left: 6px;
           transition: color 0.2s;
+          display: block;
+          text-align: center;
+          width: 100%;
         }
-        .toggle-btn:hover { color: #c9a84c; }
-
-        .divider {
-          height: 1px;
-          background: #1e1e1e;
-          margin: 28px 0;
-        }
+        .back-btn:hover { color: #c9a84c; }
 
         @media (max-width: 768px) {
-          .login-page { grid-template-columns: 1fr; }
+          .reset-page { grid-template-columns: 1fr; }
           .left-panel { display: none; }
           .right-panel { padding: 40px 24px; }
         }
       `}</style>
 
-      <div className="login-page">
+      <div className="reset-page">
 
         {/* LEFT */}
         <div className="left-panel">
@@ -326,19 +258,8 @@ export default function LoginPage() {
               Patrimoine · Clarté · Performance<br />
               Montres & maroquinerie de prestige
             </div>
-            <div className="left-stats">
-              <div>
-                <div className="left-stat-val">+18.4%</div>
-                <div className="left-stat-lbl">Rendement moyen</div>
-              </div>
-              <div>
-                <div className="left-stat-val" style={{ fontSize: 14, letterSpacing: "0.08em" }}>Patrimoine · Clarté · Performance</div>
-                <div className="left-stat-lbl">Notre promesse</div>
-              </div>
-            </div>
           </div>
 
-          {/* Decorative watch */}
           <svg className="watch-deco" width="480" height="480" viewBox="0 0 64 64" fill="none">
             <circle cx="32" cy="32" r="28" stroke="#c9a84c" strokeWidth="1"/>
             <circle cx="32" cy="32" r="22" stroke="#c9a84c" strokeWidth="0.5"/>
@@ -365,105 +286,62 @@ export default function LoginPage() {
         <div className="right-panel">
           <div className="form-card">
 
-            <div className="form-eyebrow">
-              {mode === "login" ? "Bienvenue" : mode === "signup" ? "Créer un compte" : "Récupération"}
-            </div>
-            <div className="form-title">
-              {mode === "login" ? "Connexion" : mode === "signup" ? "Rejoindre AlphaLux" : "Mot de passe oublié"}
-            </div>
+            <div className="form-eyebrow">Sécurité</div>
+            <div className="form-title">Nouveau mot de passe</div>
 
-            <div className="field">
-              <label className="field-label">Adresse email</label>
-              <input
-                className="field-input"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onKeyDown={handleKeyDown}
-              />
-            </div>
-
-            {mode !== "reset" && (
-              <div className="field">
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                  <label className="field-label" style={{ marginBottom: 0 }}>Mot de passe</label>
-                  {mode === "login" && (
-                    <button
-                      className="toggle-btn"
-                      style={{ fontSize: 9, letterSpacing: "0.1em" }}
-                      onClick={() => switchMode("reset")}
-                    >
-                      Mot de passe oublié ?
-                    </button>
-                  )}
+            {!done ? (
+              <>
+                <div className="field">
+                  <label className="field-label">Nouveau mot de passe</label>
+                  <input
+                    className="field-input"
+                    type="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </div>
-                <input
-                  className="field-input"
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
-              </div>
-            )}
 
-            {mode === "signup" && (
-              <div className="field">
-                <label className="field-label">Confirmer le mot de passe</label>
-                <input
-                  className="field-input"
-                  type="password"
-                  placeholder="••••••••"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
-              </div>
-            )}
+                <div className="field">
+                  <label className="field-label">Confirmer le mot de passe</label>
+                  <input
+                    className="field-input"
+                    type="password"
+                    placeholder="••••••••"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
 
-            {message && (
-              <div className={`message ${isError ? "error" : "success"}`}>
-                {message}
-              </div>
-            )}
+                {message && (
+                  <div className={`message ${isError ? "error" : "success"}`}>
+                    {message}
+                  </div>
+                )}
 
-            <div className="divider" />
+                <div className="divider" />
 
-            <button
-              className="btn-primary"
-              onClick={handleSubmit}
-              disabled={loading}
-            >
-              {loading
-                ? "Veuillez patienter..."
-                : mode === "login"
-                ? "Se connecter"
-                : mode === "signup"
-                ? "Créer mon compte"
-                : "Envoyer le lien"}
-            </button>
-
-            {mode === "reset" ? (
-              <div className="toggle-row">
-                <button className="toggle-btn" onClick={() => switchMode("login")}>
-                  ← Retour à la connexion
+                <button className="btn-primary" onClick={handleSubmit} disabled={loading}>
+                  {loading ? "Veuillez patienter..." : "Mettre à jour"}
                 </button>
-              </div>
+              </>
             ) : (
-              <div className="toggle-row">
-                <span className="toggle-text">
-                  {mode === "login" ? "Pas encore de compte ?" : "Déjà un compte ?"}
-                </span>
-                <button
-                  className="toggle-btn"
-                  onClick={() => switchMode(mode === "login" ? "signup" : "login")}
-                >
-                  {mode === "login" ? "S'inscrire" : "Se connecter"}
+              <>
+                {message && (
+                  <div className={`message ${isError ? "error" : "success"}`}>
+                    {message}
+                  </div>
+                )}
+                <div className="divider" />
+                <button className="btn-primary" onClick={() => window.location.href = "/login"}>
+                  Se connecter
                 </button>
-              </div>
+              </>
             )}
+
+            <button className="back-btn" onClick={() => window.location.href = "/login"}>
+              ← Retour à la connexion
+            </button>
 
           </div>
         </div>
