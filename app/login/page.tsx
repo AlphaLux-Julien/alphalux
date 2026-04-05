@@ -6,14 +6,27 @@ import { supabase } from "../../lib/supabase"
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [message, setMessage] = useState("")
   const [isError, setIsError] = useState(false)
   const [mode, setMode] = useState<"login" | "signup">("login")
   const [loading, setLoading] = useState(false)
 
+  const switchMode = (next: "login" | "signup") => {
+    setMode(next)
+    setMessage("")
+    setPassword("")
+    setConfirmPassword("")
+  }
+
   const handleSubmit = async () => {
     if (!email || !password) {
-      setMessage("Please fill in all fields")
+      setMessage("Veuillez remplir tous les champs.")
+      setIsError(true)
+      return
+    }
+    if (mode === "signup" && password !== confirmPassword) {
+      setMessage("Les mots de passe ne correspondent pas.")
       setIsError(true)
       return
     }
@@ -34,9 +47,8 @@ export default function LoginPage() {
         setMessage(error.message)
         setIsError(true)
       } else {
-        setMessage("Account created — you can now sign in.")
+        setMessage("Vérifiez votre email pour confirmer votre compte.")
         setIsError(false)
-        setMode("login")
       }
     }
     setLoading(false)
@@ -362,6 +374,20 @@ export default function LoginPage() {
               />
             </div>
 
+            {mode === "signup" && (
+              <div className="field">
+                <label className="field-label">Confirmer le mot de passe</label>
+                <input
+                  className="field-input"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
+            )}
+
             {message && (
               <div className={`message ${isError ? "error" : "success"}`}>
                 {message}
@@ -375,7 +401,7 @@ export default function LoginPage() {
               onClick={handleSubmit}
               disabled={loading}
             >
-              {loading ? "Veuillez patienter..." : mode === "login" ? "Se connecter" : "Créer un compte"}
+              {loading ? "Veuillez patienter..." : mode === "login" ? "Se connecter" : "Créer mon compte"}
             </button>
 
             <div className="toggle-row">
@@ -384,7 +410,7 @@ export default function LoginPage() {
               </span>
               <button
                 className="toggle-btn"
-                onClick={() => { setMode(mode === "login" ? "signup" : "login"); setMessage("") }}
+                onClick={() => switchMode(mode === "login" ? "signup" : "login")}
               >
                 {mode === "login" ? "S'inscrire" : "Se connecter"}
               </button>
