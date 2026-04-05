@@ -29,7 +29,7 @@ export default function LoginPage() {
       setLoading(true)
       setMessage("")
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "https://alphalux.vercel.app/reset-password",
+        redirectTo: "https://alphalux.fr/reset-password",
       })
       if (error) {
         setMessage(error.message)
