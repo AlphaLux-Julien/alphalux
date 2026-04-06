@@ -432,6 +432,7 @@ export default function Home() {
           </div>
 
         </div>
+      </div>
       <footer style={{
         padding: "24px 48px",
         borderTop: "1px solid #1e1e1e",
