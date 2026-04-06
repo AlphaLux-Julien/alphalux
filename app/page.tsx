@@ -175,7 +175,9 @@ export default function Home() {
           color: #e8e0cc;
         }
         .logo span {
-          color: #c9a84c;
+          background: linear-gradient(135deg, #d4af37, #f5d97a);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
         .btn-logout {
           background: transparent;
@@ -195,21 +197,23 @@ export default function Home() {
           color: #aaa;
         }
         .btn-refresh-all {
-          background: transparent;
-          border: 1px solid #8a7340;
-          color: #c9a84c;
-          padding: 6px 16px;
+          background: linear-gradient(135deg, #d4af37, #f5d97a);
+          border: none;
+          color: #0a0a0a;
+          padding: 6px 18px;
           font-family: 'Montserrat', sans-serif;
           font-size: 10px;
+          font-weight: 500;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           cursor: pointer;
           border-radius: 1px;
           transition: all 0.2s;
+          box-shadow: 0 2px 12px rgba(212,175,55,0.25);
         }
         .btn-refresh-all:hover:not(:disabled) {
-          background: rgba(201,168,76,0.08);
-          border-color: #c9a84c;
+          background: linear-gradient(135deg, #e0bc45, #fae88a);
+          box-shadow: 0 4px 20px rgba(212,175,55,0.4);
         }
         .btn-refresh-all:disabled { opacity: 0.4; cursor: not-allowed; }
 
@@ -239,6 +243,11 @@ export default function Home() {
           display: flex;
           flex-direction: column;
           gap: 8px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+          transition: box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+          box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.1);
         }
         .stat-label {
           font-size: 9px;
@@ -270,9 +279,10 @@ export default function Home() {
 
         /* ---- CHART SECTION ---- */
         .chart-section {
-          background: #161616;
+          background: linear-gradient(145deg, #0f0f10, #0a0a0b);
           border: 1px solid #2e2e2e;
           padding: 24px 28px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.4);
         }
         .chart-title {
           font-size: 9px;
@@ -305,9 +315,9 @@ export default function Home() {
         .watch-list {
           display: flex;
           flex-direction: column;
-          gap: 1px;
-          background: #252525;
-          border: 1px solid #2e2e2e;
+          gap: 8px;
+          background: transparent;
+          border: none;
         }
         .watch-empty {
           padding: 48px;

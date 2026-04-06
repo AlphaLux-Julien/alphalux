@@ -37,12 +37,15 @@ export default function WatchItem(props: any) {
           border: 1px solid #2e2e2e;
           border-radius: 2px;
           overflow: hidden;
-          transition: border-color 0.3s ease, transform 0.3s ease;
+          transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
           position: relative;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+          backdrop-filter: blur(8px);
         }
         .watch-card:hover {
-          border-color: #8a7340;
+          border-color: rgba(212,175,55,0.35);
           transform: translateY(-2px);
+          box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 24px rgba(212,175,55,0.08);
         }
         .watch-card::before {
           content: '';
@@ -87,6 +90,10 @@ export default function WatchItem(props: any) {
           align-items: center;
           justify-content: center;
           background: radial-gradient(circle at center, rgba(212,175,55,0.1), transparent);
+          box-shadow: inset 0 0 24px rgba(212,175,55,0.08);
+        }
+        .image-placeholder svg {
+          filter: drop-shadow(0 0 8px rgba(212,175,55,0.3));
         }
         .image-placeholder svg {
           opacity: 0.15;
@@ -111,7 +118,9 @@ export default function WatchItem(props: any) {
           font-size: 22px;
           font-weight: 300;
           letter-spacing: 0.12em;
-          color: #e8e0cc;
+          background: linear-gradient(135deg, #d4af37, #f5d97a);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
           text-transform: uppercase;
           line-height: 1.1;
         }
