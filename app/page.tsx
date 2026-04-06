@@ -26,6 +26,18 @@ export default function Home() {
   const getUser = async () => {
     const { data } = await supabase.auth.getUser()
     if (!data.user) { window.location.href = "/login"; return }
+
+    const { data: profile } = await supabase
+      .from("users")
+      .select("subscription_status")
+      .eq("id", data.user.id)
+      .single()
+
+    if (!profile || profile.subscription_status !== "active") {
+      window.location.href = "/pricing"
+      return
+    }
+
     setUser(data.user)
   }
 
