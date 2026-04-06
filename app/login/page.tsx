@@ -382,8 +382,15 @@ export default function LoginPage() {
             <line x1="14" y1="32" x2="16" y2="32" stroke="#c9a84c" strokeWidth="1"/>
           </svg>
 
-          <div style={{ fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "#222" }}>
-            © 2026 AlphaLux
+          <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "#222" }}>
+              © 2026 AlphaLux
+            </span>
+            <a href="/legal" style={{ fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase", color: "#444", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#c9a84c")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#444")}>
+              Mentions légales
+            </a>
           </div>
         </div>
 
