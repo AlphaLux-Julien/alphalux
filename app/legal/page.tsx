@@ -307,11 +307,7 @@ export default function LegalPage() {
               </div>
               <div className="cgu-item">
                 <span className="cgu-num">II</span>
-                <span className="cgu-text">Les valorisations affichées proviennent de l'API eBay et sont fournies à titre indicatif uniquement. Elles ne constituent pas une estimation certifiée et ne garantissent pas le prix de revente réel d'un bien.</span>
-              </div>
-              <div className="cgu-item">
-                <span className="cgu-num">III</span>
-                <span className="cgu-text">AlphaLux ne saurait être tenu responsable des décisions financières, d'achat ou de vente prises sur la base des données affichées sur la plateforme.</span>
+                <span className="cgu-text">Les valorisations affichées proviennent de plateformes tierces spécialisées (places de marché, sites de cotation horlogère) et sont données à titre indicatif uniquement, sans garantie de précision ni d'exhaustivité. AlphaLux ne peut être tenu responsable des décisions financières prises sur la base de ces données.</span>
               </div>
             </div>
           </div>
