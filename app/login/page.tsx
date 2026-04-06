@@ -11,6 +11,8 @@ export default function LoginPage() {
   const [isError, setIsError] = useState(false)
   const [mode, setMode] = useState<"login" | "signup" | "reset">("login")
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const switchMode = (next: "login" | "signup" | "reset") => {
     setMode(next)
@@ -234,6 +236,30 @@ export default function LoginPage() {
         .field-input::placeholder { color: #3a3a3a; }
         .field-input:focus { border-color: #8a7340; }
 
+        .field-input-wrap {
+          position: relative;
+        }
+        .field-input-wrap .field-input {
+          padding-right: 42px;
+        }
+        .eye-btn {
+          position: absolute;
+          right: 14px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #555;
+          font-size: 15px;
+          line-height: 1;
+          padding: 0;
+          transition: color 0.2s;
+          display: flex;
+          align-items: center;
+        }
+        .eye-btn:hover { color: #c9a84c; }
+
         .message {
           padding: 10px 14px;
           border-radius: 1px;
@@ -398,28 +424,38 @@ export default function LoginPage() {
                     </button>
                   )}
                 </div>
-                <input
-                  className="field-input"
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
+                <div className="field-input-wrap">
+                  <input
+                    className="field-input"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                  />
+                  <button className="eye-btn" type="button" onClick={() => setShowPassword(p => !p)}>
+                    {showPassword ? "🙈" : "👁"}
+                  </button>
+                </div>
               </div>
             )}
 
             {mode === "signup" && (
               <div className="field">
                 <label className="field-label">Confirmer le mot de passe</label>
-                <input
-                  className="field-input"
-                  type="password"
-                  placeholder="••••••••"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
+                <div className="field-input-wrap">
+                  <input
+                    className="field-input"
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                  />
+                  <button className="eye-btn" type="button" onClick={() => setShowConfirmPassword(p => !p)}>
+                    {showConfirmPassword ? "🙈" : "👁"}
+                  </button>
+                </div>
               </div>
             )}
 
