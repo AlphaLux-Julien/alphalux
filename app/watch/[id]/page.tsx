@@ -215,6 +215,22 @@ export default function WatchDetail() {
         }
         .history-table td:last-child { text-align: right; color: #c9a84c; }
         .history-empty { font-size: 11px; color: #aaa; font-style: italic; padding: 20px 0; }
+
+        @media (max-width: 768px) {
+          .detail-header { padding: 16px 20px; }
+          .hero { grid-template-columns: 1fr; }
+          .hero-image { height: 240px; }
+          .hero-image img { height: 240px; }
+          .hero-placeholder { min-height: 240px; }
+          .hero-info { padding: 24px; border-left: none; border-top: 1px solid #2e2e2e; }
+          .stats-strip { grid-template-columns: 1fr; }
+          .stat-val { font-size: 28px; }
+          .chart-section { padding: 24px 20px; }
+          .history-section { padding: 24px 20px; }
+          .history-table td { padding-bottom: 10px; font-size: 11px; }
+          .history-table th { font-size: 8px; }
+          .refresh-msg { padding: 8px 20px; }
+        }
       `}</style>
 
       <div className="detail-page">

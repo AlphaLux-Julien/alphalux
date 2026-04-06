@@ -333,7 +333,11 @@ export default function LoginPage() {
         @media (max-width: 768px) {
           .login-page { grid-template-columns: 1fr; }
           .left-panel { display: none; }
-          .right-panel { padding: 40px 24px; }
+          .right-panel { padding: 32px 24px; }
+          .form-card { max-width: 100%; }
+          .form-title { font-size: 26px; }
+          .field-input { min-height: 44px; }
+          .btn-primary { min-height: 48px; }
         }
       `}</style>
 

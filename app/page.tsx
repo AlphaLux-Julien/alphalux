@@ -328,6 +328,26 @@ export default function Home() {
           color: #aaa;
           border: 1px solid #2e2e2e;
         }
+
+        @media (max-width: 768px) {
+          .header {
+            padding: 16px 20px;
+          }
+          .btn-logout span { display: none; }
+          .dashboard {
+            padding: 24px 20px;
+          }
+          .stats-row {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .stat-value {
+            font-size: 24px;
+          }
+          .content {
+            padding: 24px 20px;
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
 
       <div className="page">

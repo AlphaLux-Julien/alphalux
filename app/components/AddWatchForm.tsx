@@ -133,6 +133,11 @@ export default function AddWatchForm({ addWatch }: { addWatch: (watch: any) => v
         .btn-submit:disabled { opacity:.5; cursor:not-allowed; }
         .success-msg { margin-top:12px; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:#4ab364; text-align:center; animation:fadeIn .3s ease; }
         @keyframes fadeIn { from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;} }
+        @media (max-width: 768px) {
+          .form-wrap { padding: 20px; }
+          .form-input { min-height: 44px; }
+          .btn-submit { min-height: 48px; }
+        }
       `}</style>
 
       <div className="form-wrap">

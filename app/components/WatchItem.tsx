@@ -299,6 +299,32 @@ export default function WatchItem(props: any) {
           color: #bbb;
           font-style: italic;
         }
+
+        @media (max-width: 768px) {
+          .card-inner {
+            grid-template-columns: 1fr;
+          }
+          .image-side {
+            height: 200px;
+            width: 100%;
+          }
+          .image-placeholder {
+            min-height: 200px;
+          }
+          .info-side {
+            padding: 16px 20px;
+          }
+          .watch-brand {
+            font-size: 18px;
+          }
+          .btn-ghost,
+          .btn-delete {
+            min-height: 44px;
+          }
+          .watch-financials {
+            flex-wrap: wrap;
+          }
+        }
       `}</style>
 
       <div className="watch-card" onClick={() => router.push(`/watch/${watch.id}`)} style={{ cursor: "pointer" }}>
