@@ -33,7 +33,7 @@ export default function WatchItem(props: any) {
 
         .watch-card {
           font-family: 'Montserrat', sans-serif;
-          background: #161616;
+          background: linear-gradient(145deg, #0f0f10, #0a0a0b);
           border: 1px solid #2e2e2e;
           border-radius: 2px;
           overflow: hidden;
@@ -86,7 +86,7 @@ export default function WatchItem(props: any) {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(135deg, #161616 0%, #222 100%);
+          background: radial-gradient(circle at center, rgba(212,175,55,0.1), transparent);
         }
         .image-placeholder svg {
           opacity: 0.15;
@@ -169,11 +169,14 @@ export default function WatchItem(props: any) {
         .financial-value {
           font-size: 18px;
           font-weight: 300;
-          color: #c9a84c;
+          background: linear-gradient(90deg, #d4af37, #f5d97a);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
           letter-spacing: 0.04em;
         }
         .financial-value.neutral {
-          color: #aaa;
+          background: none;
+          -webkit-text-fill-color: #aaa;
         }
 
         .profit-badge {
@@ -187,8 +190,9 @@ export default function WatchItem(props: any) {
           letter-spacing: 0.05em;
         }
         .profit-badge.positive {
-          background: rgba(74, 179, 100, 0.08);
-          border: 1px solid rgba(74, 179, 100, 0.2);
+          background: rgba(0, 255, 150, 0.08);
+          border: 1px solid rgba(0, 255, 150, 0.25);
+          border-radius: 4px;
           color: #4ab364;
         }
         .profit-badge.negative {

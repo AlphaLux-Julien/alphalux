@@ -234,7 +234,7 @@ export default function Home() {
           margin-bottom: 36px;
         }
         .stat-card {
-          background: #181818;
+          background: linear-gradient(145deg, #0f0f10, #0a0a0b);
           padding: 24px 28px;
           display: flex;
           flex-direction: column;
@@ -250,12 +250,15 @@ export default function Home() {
           font-family: 'Cormorant Garamond', serif;
           font-size: 32px;
           font-weight: 300;
-          color: #c9a84c;
+          background: linear-gradient(90deg, #d4af37, #f5d97a);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
           letter-spacing: 0.02em;
           line-height: 1;
         }
         .stat-value.neutral {
-          color: #666;
+          background: none;
+          -webkit-text-fill-color: #666;
         }
         .stat-sub {
           font-size: 11px;
