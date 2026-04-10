@@ -10,9 +10,6 @@ export default function PricingPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
-  const monthlyPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_MONTHLY_ID!
-  const yearlyPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_YEARLY_ID!
-
   const handleSubscribe = async () => {
     setLoading(true)
     setError("")
@@ -24,15 +21,13 @@ export default function PricingPage() {
         return
       }
 
-      const priceId = isYearly ? yearlyPriceId : monthlyPriceId
-
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${session.access_token}`,
         },
-        body: JSON.stringify({ priceId }),
+        body: JSON.stringify({ plan: isYearly ? "yearly" : "monthly" }),
       })
 
       const data = await res.json()
