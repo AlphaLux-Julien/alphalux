@@ -261,7 +261,7 @@ export default function LegalPage() {
               <div className="info-row">
                 <span className="info-label">Email de paiement</span>
                 <span className="info-value">
-                  <a href="mailto:julien26r@yahoo.fr">julien26r@yahoo.fr</a>
+                  <a href="mailto:contact@alphalux.fr">contact@alphalux.fr</a>
                 </span>
               </div>
             </div>
