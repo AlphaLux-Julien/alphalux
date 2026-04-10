@@ -448,14 +448,22 @@ export default function Home() {
         <header className="header">
           <div className="logo">Alpha<span>Lux</span></div>
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            <a
-              href="/api/stripe/portal"
-              style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#aaa", textDecoration: "none", transition: "color 0.2s" }}
+            <button
+              onClick={async () => {
+                const { data: { session: authSession } } = await supabase.auth.getSession()
+                if (!authSession) return
+                const res = await fetch("/api/stripe/portal", {
+                  headers: { Authorization: `Bearer ${authSession.access_token}` },
+                })
+                const data = await res.json()
+                if (data.url) window.location.href = data.url
+              }}
+              style={{ background: "none", border: "none", cursor: "pointer", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#aaa", transition: "color 0.2s", fontFamily: "inherit", padding: 0 }}
               onMouseEnter={e => (e.currentTarget.style.color = "#c9a84c")}
               onMouseLeave={e => (e.currentTarget.style.color = "#aaa")}
             >
               Gérer mon abonnement
-            </a>
+            </button>
             <button className="btn-logout" onClick={logout}>Déconnexion</button>
           </div>
         </header>
