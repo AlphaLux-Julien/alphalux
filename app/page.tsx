@@ -27,11 +27,19 @@ export default function Home() {
     const { data } = await supabase.auth.getUser()
     if (!data.user) { window.location.href = "/login"; return }
 
-    const { data: profile } = await supabase
-      .from("users")
-      .select("subscription_status")
-      .eq("id", data.user.id)
-      .single()
+    let profile: { subscription_status: string } | null = null
+
+    // Retry jusqu'à 3 fois pour absorber le délai du webhook Stripe post-paiement
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const { data: profileData } = await supabase
+        .from("users")
+        .select("subscription_status")
+        .eq("id", data.user.id)
+        .single()
+      profile = profileData
+      if (profile?.subscription_status === "active") break
+      if (attempt < 2) await new Promise((r) => setTimeout(r, 2000))
+    }
 
     if (!profile || profile.subscription_status !== "active") {
       window.location.href = "/pricing"
