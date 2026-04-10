@@ -223,7 +223,7 @@ export default function LegalPage() {
       <div className="legal-page">
 
         <header className="legal-header">
-          <div className="logo" onClick={() => router.push("/")}>Alpha<span>Lux</span></div>
+          <a href="/" className="logo" style={{ textDecoration: "none" }}>Alpha<span>Lux</span></a>
           <button className="btn-back" onClick={() => router.back()}>← Retour</button>
         </header>
 

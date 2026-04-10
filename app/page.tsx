@@ -448,7 +448,7 @@ export default function Home() {
 
         {/* HEADER */}
         <header className="header">
-          <div className="logo">Alpha<span>Lux</span></div>
+          <a href="/" className="logo" style={{ textDecoration: "none" }}>Alpha<span>Lux</span></a>
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
             <button
               onClick={async () => {

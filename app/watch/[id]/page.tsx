@@ -237,7 +237,7 @@ export default function WatchDetail() {
 
         {/* Header */}
         <header className="detail-header">
-          <div className="logo" onClick={() => router.push("/")}>Alpha<span>Lux</span></div>
+          <a href="/" className="logo" style={{ textDecoration: "none" }}>Alpha<span>Lux</span></a>
           <div className="header-actions">
             <button className="btn-refresh" onClick={handleRefreshPrice} disabled={refreshing}>
               {refreshing ? "Fetching..." : "↻ Market price"}

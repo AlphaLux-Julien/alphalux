@@ -145,7 +145,7 @@ export default function PricingCancelPage() {
       `}</style>
 
       <div className="cancel-page">
-        <div className="logo">Alpha<span>Lux</span></div>
+        <a href="/" className="logo" style={{ textDecoration: "none" }}>Alpha<span>Lux</span></a>
 
         <div className="cancel-card">
           <div className="cancel-icon">

@@ -126,7 +126,7 @@ export default function PricingSuccessPage() {
       `}</style>
 
       <div className="success-page">
-        <div className="logo">Alpha<span>Lux</span></div>
+        <a href="/" className="logo" style={{ textDecoration: "none" }}>Alpha<span>Lux</span></a>
 
         <div className="success-card">
           <div className="checkmark-wrapper">

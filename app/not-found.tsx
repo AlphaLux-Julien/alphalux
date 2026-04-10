@@ -104,7 +104,7 @@ export default function NotFound() {
       `}</style>
 
       <div className="not-found">
-        <div className="logo" onClick={() => router.push("/")}>Alpha<span>Lux</span></div>
+        <a href="/" className="logo" style={{ textDecoration: "none" }}>Alpha<span>Lux</span></a>
         <div className="code">404</div>
         <div className="divider" />
         <div className="title">Cette page n'existe pas</div>
