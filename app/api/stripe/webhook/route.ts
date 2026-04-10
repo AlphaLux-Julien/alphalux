@@ -32,9 +32,8 @@ export async function POST(req: NextRequest) {
   if (event.type === "customer.subscription.deleted" || event.type === "customer.subscription.paused") {
     const subscription = event.data.object as Stripe.Subscription
     const customerId = subscription.customer as string
-    // Cherche l'utilisateur par customer_id dans la table users (on stocke pas encore customer_id, on fait via email)
-    // Pour l'instant on log l'événement — la gestion complète nécessite de stocker stripe_customer_id
-    console.log(`Subscription ${event.type} for customer ${customerId}`)
+    // TODO: stocker stripe_customer_id dans users pour pouvoir mettre à jour le statut ici
+    console.error(`[webhook] ${event.type} non géré pour customer ${customerId} — stripe_customer_id non stocké`)
   }
 
   return NextResponse.json({ received: true })
