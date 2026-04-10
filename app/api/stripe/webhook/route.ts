@@ -49,9 +49,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true })
     }
 
+    const customerId = typeof session.customer === "string" ? session.customer : session.customer?.id ?? null
+
     const { error: upsertError } = await supabase
       .from("users")
-      .upsert({ id: userId, subscription_status: "active" }, { onConflict: "id" })
+      .upsert(
+        { id: userId, subscription_status: "active", stripe_customer_id: customerId },
+        { onConflict: "id" }
+      )
 
     if (upsertError) {
       console.error("[webhook] Échec mise à jour subscription_status pour user", userId, ":", upsertError.message)
@@ -61,8 +66,8 @@ export async function POST(req: NextRequest) {
   if (event.type === "customer.subscription.deleted" || event.type === "customer.subscription.paused") {
     const subscription = event.data.object as Stripe.Subscription
     const customerId = subscription.customer as string
-    // TODO: stocker stripe_customer_id dans users pour pouvoir mettre à jour le statut ici
-    console.error(`[webhook] ${event.type} non géré pour customer ${customerId} — stripe_customer_id non stocké`)
+    // stripe_customer_id maintenant stocké — TODO: retrouver l'user par stripe_customer_id et passer subscription_status à "inactive"
+    console.error(`[webhook] ${event.type} non géré pour customer ${customerId}`)
   }
 
   return NextResponse.json({ received: true })

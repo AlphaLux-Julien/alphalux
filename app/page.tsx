@@ -14,6 +14,7 @@ export default function Home() {
   const [portfolioHistory, setPortfolioHistory] = useState<any[]>([])
   const [refreshing, setRefreshing] = useState(false)
   const [refreshMsg, setRefreshMsg] = useState("")
+  const [formVisible, setFormVisible] = useState(false)
 
   // ---------------- TOTALS ----------------
   const totalValue = watches.reduce((sum, w) => sum + Number(w.current_value || 0), 0)
@@ -349,7 +350,78 @@ export default function Home() {
           border: 1px solid #2e2e2e;
         }
 
+        /* ---- WELCOME SCREEN ---- */
+        .welcome-screen {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: calc(100vh - 73px);
+          padding: 48px 24px;
+          text-align: center;
+        }
+        .welcome-eyebrow {
+          font-size: 9px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: #8a7340;
+          margin-bottom: 20px;
+        }
+        .welcome-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 52px;
+          font-weight: 300;
+          letter-spacing: 0.05em;
+          color: #e8e0cc;
+          margin-bottom: 20px;
+          line-height: 1.1;
+        }
+        .welcome-subtitle {
+          font-size: 12px;
+          letter-spacing: 0.08em;
+          color: #666;
+          max-width: 380px;
+          line-height: 1.8;
+          margin-bottom: 48px;
+        }
+        .btn-welcome-cta {
+          padding: 16px 40px;
+          background: linear-gradient(135deg, #d4af37, #f5d97a);
+          border: none;
+          color: #0a0a0a;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.25s;
+          box-shadow: 0 4px 24px rgba(212,175,55,0.3);
+        }
+        .btn-welcome-cta:hover {
+          background: linear-gradient(135deg, #e0bc45, #fae88a);
+          box-shadow: 0 6px 32px rgba(212,175,55,0.5);
+          transform: translateY(-1px);
+        }
+        .welcome-form-wrapper {
+          width: 100%;
+          max-width: 460px;
+          margin: 0 auto;
+          padding: 48px 24px;
+        }
+        .welcome-form-title {
+          font-size: 9px;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          color: #555;
+          margin-bottom: 24px;
+          text-align: left;
+          padding-bottom: 12px;
+          border-bottom: 1px solid #2e2e2e;
+        }
+
         @media (max-width: 768px) {
+          .welcome-title { font-size: 36px; }
           .header {
             padding: 16px 20px;
           }
@@ -375,113 +447,134 @@ export default function Home() {
         {/* HEADER */}
         <header className="header">
           <div className="logo">Alpha<span>Lux</span></div>
-          <button className="btn-logout" onClick={logout}>Déconnexion</button>
+          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+            <a
+              href="/api/stripe/portal"
+              style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#aaa", textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#c9a84c")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#aaa")}
+            >
+              Gérer mon abonnement
+            </a>
+            <button className="btn-logout" onClick={logout}>Déconnexion</button>
+          </div>
         </header>
 
-        {/* DASHBOARD */}
-        <section className="dashboard">
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
-            <div className="dashboard-label" style={{ marginBottom: 0 }}>Vue d'ensemble</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              {refreshMsg && <span style={{ fontSize: 10, letterSpacing: "0.1em", color: "#8a7340" }}>{refreshMsg}</span>}
-              <button className="btn-refresh-all" onClick={refreshMarketPrices} disabled={refreshing || watches.length === 0}>
-                {refreshing ? "Récupération..." : "↻ Actualiser les prix"}
-              </button>
-            </div>
-          </div>
-
-          <div className="stats-row">
-            <div className="stat-card">
-              <span className="stat-label">Valeur de la collection</span>
-              <span className={`stat-value ${totalValue === 0 ? "neutral" : ""}`}>
-                {totalValue.toLocaleString("fr-FR")} €
-              </span>
-              <span className="stat-sub">{watches.length} {watches.length > 1 ? "pièces" : "pièce"}</span>
-            </div>
-
-            <div className="stat-card">
-              <span className="stat-label">Total investi</span>
-              <span className={`stat-value ${totalCost === 0 ? "neutral" : ""}`}>
-                {totalCost.toLocaleString("fr-FR")} €
-              </span>
-              <span className="stat-sub">coût d'acquisition</span>
-            </div>
-
-            <div className="stat-card">
-              <span className="stat-label">Bénéfice total</span>
-              <span className={`stat-value ${totalProfit === 0 ? "neutral" : ""}`}>
-                {totalProfit > 0 ? "+" : ""}{totalProfit.toLocaleString("fr-FR")} €
-              </span>
-              {profitPct && (
-                <span className={`stat-sub ${isPositive ? "positive" : "negative"}`}>
-                  {isPositive ? "▲" : "▼"} {profitPct}% vs coût
-                </span>
-              )}
-            </div>
-
-            <div className="stat-card">
-              <span className="stat-label">Meilleure performance</span>
-              {watches.length > 0 ? (() => {
-                const best = watches.reduce((prev, curr) =>
-                  (Number(curr.current_value || 0) - Number(curr.purchase_price || 0)) >
-                  (Number(prev.current_value || 0) - Number(prev.purchase_price || 0)) ? curr : prev
-                )
-                const bestProfit = Number(best.current_value || 0) - Number(best.purchase_price || 0)
-                return (
-                  <>
-                    <span className="stat-value" style={{ fontSize: 20, paddingTop: 4 }}>
-                      {best.brand || "—"}
-                    </span>
-                    <span className={`stat-sub ${bestProfit >= 0 ? "positive" : "negative"}`}>
-                      {bestProfit > 0 ? "+" : ""}{bestProfit.toLocaleString("fr-FR")} €
-                    </span>
-                  </>
-                )
-              })() : (
-                <span className="stat-value neutral" style={{ fontSize: 20 }}>—</span>
-              )}
-            </div>
-          </div>
-
-          <div className="chart-section">
-            <div className="chart-title">Évolution du portefeuille</div>
-            <PortfolioChart data={portfolioHistory} />
-          </div>
-        </section>
-
-        {/* CONTENT */}
-        <div className="content">
-
-          {/* ADD FORM */}
-          <div>
-            <div className="section-title">Ajouter une montre</div>
-            <AddWatchForm addWatch={addWatch} />
-            {message && <p style={{ color: "#c9a84c", fontSize: 12, marginTop: 12 }}>{message}</p>}
-          </div>
-
-          {/* WATCH LIST */}
-          <div className="watch-list-section">
-            <div className="section-title">
-              Collection · {watches.length} {watches.length > 1 ? "pièces" : "pièce"}
-            </div>
-            {watches.length === 0 ? (
-              <div className="watch-empty">Votre collection est vide</div>
+        {watches.length === 0 ? (
+          <>
+            {!formVisible ? (
+              /* WELCOME SCREEN */
+              <div className="welcome-screen">
+                <p className="welcome-eyebrow">Collection privée</p>
+                <h1 className="welcome-title">Bienvenue sur AlphaLux</h1>
+                <p className="welcome-subtitle">
+                  Commencez par ajouter votre première montre à votre collection.
+                </p>
+                <button className="btn-welcome-cta" onClick={() => setFormVisible(true)}>
+                  Ajouter ma première montre
+                </button>
+              </div>
             ) : (
-              <div className="watch-list">
-                {watches.map((w) => (
-                  <WatchItem
-                    key={w.id}
-                    watch={w}
-                    updatePrice={updatePrice}
-                    getHistory={getHistory}
-                    deleteWatch={deleteWatch}
-                  />
-                ))}
+              /* FORM ONLY */
+              <div className="welcome-form-wrapper">
+                <div className="welcome-form-title">Ajouter une montre</div>
+                <AddWatchForm addWatch={addWatch} />
+                {message && <p style={{ color: "#c9a84c", fontSize: 12, marginTop: 12 }}>{message}</p>}
               </div>
             )}
-          </div>
+          </>
+        ) : (
+          <>
+            {/* DASHBOARD */}
+            <section className="dashboard">
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+                <div className="dashboard-label" style={{ marginBottom: 0 }}>Vue d'ensemble</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  {refreshMsg && <span style={{ fontSize: 10, letterSpacing: "0.1em", color: "#8a7340" }}>{refreshMsg}</span>}
+                  <button className="btn-refresh-all" onClick={refreshMarketPrices} disabled={refreshing}>
+                    {refreshing ? "Récupération..." : "↻ Actualiser les prix"}
+                  </button>
+                </div>
+              </div>
 
-        </div>
+              <div className="stats-row">
+                <div className="stat-card">
+                  <span className="stat-label">Valeur de la collection</span>
+                  <span className="stat-value">{totalValue.toLocaleString("fr-FR")} €</span>
+                  <span className="stat-sub">{watches.length} {watches.length > 1 ? "pièces" : "pièce"}</span>
+                </div>
+
+                <div className="stat-card">
+                  <span className="stat-label">Total investi</span>
+                  <span className="stat-value">{totalCost.toLocaleString("fr-FR")} €</span>
+                  <span className="stat-sub">coût d'acquisition</span>
+                </div>
+
+                <div className="stat-card">
+                  <span className="stat-label">Bénéfice total</span>
+                  <span className="stat-value">
+                    {totalProfit > 0 ? "+" : ""}{totalProfit.toLocaleString("fr-FR")} €
+                  </span>
+                  {profitPct && (
+                    <span className={`stat-sub ${isPositive ? "positive" : "negative"}`}>
+                      {isPositive ? "▲" : "▼"} {profitPct}% vs coût
+                    </span>
+                  )}
+                </div>
+
+                <div className="stat-card">
+                  <span className="stat-label">Meilleure performance</span>
+                  {(() => {
+                    const best = watches.reduce((prev, curr) =>
+                      (Number(curr.current_value || 0) - Number(curr.purchase_price || 0)) >
+                      (Number(prev.current_value || 0) - Number(prev.purchase_price || 0)) ? curr : prev
+                    )
+                    const bestProfit = Number(best.current_value || 0) - Number(best.purchase_price || 0)
+                    return (
+                      <>
+                        <span className="stat-value" style={{ fontSize: 20, paddingTop: 4 }}>{best.brand || "—"}</span>
+                        <span className={`stat-sub ${bestProfit >= 0 ? "positive" : "negative"}`}>
+                          {bestProfit > 0 ? "+" : ""}{bestProfit.toLocaleString("fr-FR")} €
+                        </span>
+                      </>
+                    )
+                  })()}
+                </div>
+              </div>
+
+              <div className="chart-section">
+                <div className="chart-title">Évolution du portefeuille</div>
+                <PortfolioChart data={portfolioHistory} />
+              </div>
+            </section>
+
+            {/* CONTENT */}
+            <div className="content">
+              <div>
+                <div className="section-title">Ajouter une montre</div>
+                <AddWatchForm addWatch={addWatch} />
+                {message && <p style={{ color: "#c9a84c", fontSize: 12, marginTop: 12 }}>{message}</p>}
+              </div>
+
+              <div className="watch-list-section">
+                <div className="section-title">
+                  Collection · {watches.length} {watches.length > 1 ? "pièces" : "pièce"}
+                </div>
+                <div className="watch-list">
+                  {watches.map((w) => (
+                    <WatchItem
+                      key={w.id}
+                      watch={w}
+                      updatePrice={updatePrice}
+                      getHistory={getHistory}
+                      deleteWatch={deleteWatch}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <footer style={{
         padding: "24px 48px",
