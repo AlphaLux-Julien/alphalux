@@ -5,7 +5,14 @@ import { createClient } from "@supabase/supabase-js"
 export async function POST(req: NextRequest) {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-06-20" })
-    const { priceId } = await req.json()
+    const { plan } = await req.json()
+
+    const priceMap: Record<string, string | undefined> = {
+      monthly: process.env.STRIPE_PRICE_MONTHLY_ID,
+      yearly: process.env.STRIPE_PRICE_YEARLY_ID,
+    }
+    const priceId = priceMap[plan]
+    if (!priceId) return NextResponse.json({ error: "Plan invalide" }, { status: 400 })
 
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
