@@ -9,6 +9,7 @@ URL : https://alphalux.fr
 - Next.js 16 + TypeScript
 - Supabase (auth, BDD, storage bucket "watch-images")
 - Vercel (déploiement, cron jobs)
+- Stripe (paiement, abonnements, portail client)
 - Resend (emails transactionnels depuis noreply@alphalux.fr)
 - Recharts (graphiques)
 
@@ -16,7 +17,7 @@ URL : https://alphalux.fr
 - `watches` : id, user_id, brand, model, reference, purchase_price, current_value, year, image_url, note
 - `price_history` : id, watch_id, user_id, value, created_at
 - `market_data` : pour la valorisation marché
-- `users` : id, email, subscription_status
+- `users` : id, email, subscription_status, stripe_customer_id
 - RLS activé sur toutes les tables
 
 ## Auth
@@ -26,17 +27,25 @@ URL : https://alphalux.fr
 - Supabase URL config : https://alphalux.fr
 
 ## Structure fichiers clés
-- `app/page.tsx` — dashboard principal
+- `app/page.tsx` — dashboard principal (avec écran onboarding si 0 montre)
 - `app/login/page.tsx` — page login/inscription/reset
 - `app/legal/page.tsx` — mentions légales + CGU
 - `app/watch/[id]/page.tsx` — page détail montre
 - `app/reset-password/page.tsx` — page reset mot de passe
+- `app/not-found.tsx` — page 404 luxury dark
+- `app/pricing/page.tsx` — page tarification (29,99€/mois ou 249€/an)
+- `app/pricing/success/page.tsx` — page post-paiement succès
+- `app/pricing/cancel/page.tsx` — page post-paiement annulation
 - `app/components/WatchItem.tsx` — card montre
 - `app/components/AddWatchForm.tsx` — formulaire ajout montre
 - `app/components/PortfolioChart.tsx` — graphique portfolio
 - `app/components/PriceChart.tsx` — graphique prix
 - `app/api/market-price/route.ts` — API eBay valorisation
 - `app/api/cron/update-prices/route.ts` — cron job mise à jour prix
+- `app/api/stripe/checkout/route.ts` — création session Stripe Checkout
+- `app/api/stripe/webhook/route.ts` — webhook Stripe (checkout.session.completed, subscription.deleted)
+- `app/api/stripe/portal/route.ts` — portail client Stripe (gestion abonnement)
+- `middleware.ts` — routes publiques (dont /api/stripe/webhook)
 - `vercel.json` — cron job quotidien 8h
 
 ## Variables d'environnement (.env.local + Vercel)
@@ -46,6 +55,24 @@ URL : https://alphalux.fr
 - EBAY_CLIENT_SECRET
 - CRON_SECRET
 - SUPABASE_SERVICE_ROLE_KEY
+- STRIPE_SECRET_KEY
+- NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+- STRIPE_PRICE_MONTHLY_ID
+- STRIPE_PRICE_YEARLY_ID
+- STRIPE_WEBHOOK_SECRET
+
+## Stripe
+- Webhook URL : https://www.alphalux.fr/api/stripe/webhook
+- Événements écoutés : checkout.session.completed, customer.subscription.deleted
+- checkout → sauvegarde subscription_status = "active" + stripe_customer_id dans users
+- Portail client : bouton "Gérer mon abonnement" dans le header du dashboard
+- Protection routes : redirect vers /pricing si subscription_status != "active"
+
+## SEO & infra
+- Metadata + OpenGraph dans app/layout.tsx
+- Google Search Console vérifié (public/google9a95fbe24fbd5709.html)
+- DMARC configuré sur OVH
+- Redirection contact@alphalux.fr → julien26r@yahoo.fr
 
 ## Fait ✅
 - Auth complète (connexion, inscription, mot de passe oublié)
@@ -64,34 +91,31 @@ URL : https://alphalux.fr
 - Templates email luxury dark (confirmation, reset, invitation)
 - Mentions légales + CGU (app/legal/page.tsx)
 - Auto-entreprise créée (micro-entreprise, ajout activité sur LMNP existant)
-
-## En cours 🔄
-- Upgrade UI luxury (gold gradient, profondeur cards, glow image placeholder)
-- Bouton afficher/masquer mot de passe sur login
-
-## À faire 🔴 Bloquant
-- Corriger l'erreur de déploiement Vercel (Failed production deployment)
-- Nettoyer les données de test en BDD
+- Stripe intégré : Checkout, webhook, portail client
+- Page pricing (29,99€/mois ou 249€/an)
+- Protection routes par subscription_status
+- Écran onboarding au premier login (0 montre)
+- Page 404 luxury dark
+- Metadata SEO + OpenGraph
+- Google Search Console vérifié
+- Logo AlphaLux cliquable → / sur toutes les pages
+- Tagline : "La précision au service du prestige."
+- Polices : Cormorant Garamond (titres) + Montserrat (texte) + Playfair Display (italic accents)
 
 ## À faire 🟠 Important
-- Plan de tarification (gratuit ? freemium ? abonnement ?)
-- Intégration Stripe (si payant)
-- Limite plan gratuit (ex: max 3 montres)
-- Page pricing
+- Gérer customer.subscription.deleted → passer subscription_status à "inactive"
+- Test et correction mobile
 
 ## À faire 🟡 Recommandé
-- Test et correction mobile
-- Page 404 stylée
-- Supprimer les console.log du code
-- Ajouter Chrono24 comme 2ème source de valorisation
+- Ajouter Chrono24 comme 2ème source de valorisation (attendre API stable)
 - V2 : sacs à main de luxe
 
 ## Charte UI
 - Fond : #0f0f0f / #161616
-- Doré : #c9a84c (à migrer vers gradient #d4af37 → #f5d97a)
+- Doré : gradient #d4af37 → #f5d97a
 - Texte principal : #e8e0cc
 - Texte secondaire : #aaa / #bbb
 - Bordures : #2e2e2e
-- Fonts : Cormorant Garamond (titres) + Montserrat (texte)
+- Fonts : Cormorant Garamond (titres) + Montserrat (texte) + Playfair Display (italic)
 - Positif : #4ab364
 - Négatif : #dc5050
