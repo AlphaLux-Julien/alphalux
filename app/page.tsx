@@ -451,11 +451,13 @@ export default function Home() {
             <button
               onClick={async () => {
                 const { data: { session: authSession } } = await supabase.auth.getSession()
+                console.log("[portal] session:", authSession ? "OK" : "NULL")
                 if (!authSession) return
                 const res = await fetch("/api/stripe/portal", {
                   headers: { Authorization: `Bearer ${authSession.access_token}` },
                 })
                 const data = await res.json()
+                console.log("[portal] response:", res.status, data)
                 if (data.url) window.location.href = data.url
               }}
               style={{ background: "none", border: "none", cursor: "pointer", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#aaa", transition: "color 0.2s", fontFamily: "inherit", padding: 0 }}

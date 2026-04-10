@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
     const { data: { user }, error: authError } = await supabase.auth.getUser(token)
+    console.error("[portal] token reçu:", token ? "OUI" : "NON", "| user:", user?.id ?? "NULL", "| authError:", authError?.message ?? "none")
     if (authError || !user) return NextResponse.json({ error: "Non authentifié" }, { status: 401 })
 
     // Récupère le stripe_customer_id depuis la table users
@@ -25,6 +26,7 @@ export async function GET(req: NextRequest) {
       .eq("id", user.id)
       .single()
 
+    console.error("[portal] profile:", JSON.stringify(profile), "| error:", error?.message ?? "none")
     if (error || !profile?.stripe_customer_id) {
       console.error("[portal] stripe_customer_id introuvable pour user", user.id)
       return NextResponse.json({ error: "Aucun abonnement trouvé" }, { status: 404 })
