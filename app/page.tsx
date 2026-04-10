@@ -15,6 +15,8 @@ export default function Home() {
   const [refreshing, setRefreshing] = useState(false)
   const [refreshMsg, setRefreshMsg] = useState("")
   const [formVisible, setFormVisible] = useState(false)
+  const [portalLoading, setPortalLoading] = useState(false)
+  const [portalError, setPortalError] = useState("")
 
   // ---------------- TOTALS ----------------
   const totalValue = watches.reduce((sum, w) => sum + Number(w.current_value || 0), 0)
@@ -450,22 +452,37 @@ export default function Home() {
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
             <button
               onClick={async () => {
-                const { data: { session: authSession } } = await supabase.auth.getSession()
-                console.log("[portal] session:", authSession ? "OK" : "NULL")
-                if (!authSession) return
-                const res = await fetch("/api/stripe/portal", {
-                  headers: { Authorization: `Bearer ${authSession.access_token}` },
-                })
-                const data = await res.json()
-                console.log("[portal] response:", res.status, data)
-                if (data.url) window.location.href = data.url
+                setPortalLoading(true)
+                setPortalError("")
+                try {
+                  const { data: { session: authSession } } = await supabase.auth.getSession()
+                  if (!authSession) {
+                    setPortalError("Session expirée, reconnectez-vous.")
+                    return
+                  }
+                  const res = await fetch("/api/stripe/portal", {
+                    headers: { Authorization: `Bearer ${authSession.access_token}` },
+                  })
+                  const data = await res.json()
+                  if (data.url) {
+                    window.location.href = data.url
+                  } else {
+                    setPortalError(data.error || "Erreur inattendue.")
+                  }
+                } catch {
+                  setPortalError("Impossible de contacter le serveur.")
+                } finally {
+                  setPortalLoading(false)
+                }
               }}
-              style={{ background: "none", border: "none", cursor: "pointer", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#aaa", transition: "color 0.2s", fontFamily: "inherit", padding: 0 }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#c9a84c")}
-              onMouseLeave={e => (e.currentTarget.style.color = "#aaa")}
+              disabled={portalLoading}
+              style={{ background: "none", border: "none", cursor: portalLoading ? "wait" : "pointer", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: portalLoading ? "#555" : "#aaa", transition: "color 0.2s", fontFamily: "inherit", padding: 0 }}
+              onMouseEnter={e => { if (!portalLoading) e.currentTarget.style.color = "#c9a84c" }}
+              onMouseLeave={e => { if (!portalLoading) e.currentTarget.style.color = "#aaa" }}
             >
-              Gérer mon abonnement
+              {portalLoading ? "Chargement..." : "Gérer mon abonnement"}
             </button>
+            {portalError && <span style={{ fontSize: 10, color: "#dc5050", letterSpacing: "0.08em" }}>{portalError}</span>}
             <button className="btn-logout" onClick={logout}>Déconnexion</button>
           </div>
         </header>
