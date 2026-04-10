@@ -1,15 +1,9 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 
 export default function PricingSuccessPage() {
   const router = useRouter()
-
-  useEffect(() => {
-    const timer = setTimeout(() => router.push("/"), 3000)
-    return () => clearTimeout(timer)
-  }, [router])
 
   return (
     <>
@@ -156,7 +150,7 @@ export default function PricingSuccessPage() {
           </p>
 
           <button className="btn-primary" onClick={() => router.push("/")}>
-            Accéder à ma collection
+            Accéder à mon dashboard
           </button>
         </div>
       </div>
