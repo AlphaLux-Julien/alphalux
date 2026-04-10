@@ -364,8 +364,8 @@ export default function LoginPage() {
                 <div className="left-stat-lbl">Rendement moyen</div>
               </div>
               <div>
-                <div className="left-stat-val" style={{ fontSize: 14, letterSpacing: "0.08em" }}>Patrimoine · Clarté · Performance</div>
-                <div className="left-stat-lbl">Notre promesse</div>
+                <div className="left-stat-val" style={{ fontSize: 14, letterSpacing: "0.08em" }}>La précision au service du prestige.</div>
+                <div className="left-stat-lbl">Patrimoine · Clarté · Performance</div>
               </div>
             </div>
           </div>
