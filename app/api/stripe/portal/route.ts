@@ -6,14 +6,13 @@ export async function GET(req: NextRequest) {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-06-20" })
 
+    const token = req.headers.get("authorization")?.replace("Bearer ", "")
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      { global: { headers: { Authorization: req.headers.get("authorization") || "" } } }
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     )
-
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return NextResponse.json({ error: "Non authentifié" }, { status: 401 })
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token)
+    if (authError || !user) return NextResponse.json({ error: "Non authentifié" }, { status: 401 })
 
     // Récupère le stripe_customer_id depuis la table users
     const supabaseAdmin = createClient(
