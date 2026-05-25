@@ -71,6 +71,11 @@ export default function LoginPage() {
         setMessage(error.message)
         setIsError(true)
       } else {
+        fetch("/api/auth/welcome", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }).catch(() => {})
         setMessage("Vérifiez votre email pour confirmer votre compte.")
         setIsError(false)
       }
