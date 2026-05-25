@@ -28,7 +28,7 @@ export default function Home() {
   // ---------------- USER ----------------
   const getUser = async () => {
     const { data } = await supabase.auth.getUser()
-    if (!data.user) { window.location.href = "/login"; return }
+    if (!data.user) { window.location.href = "/landing"; return }
 
     let profile: { subscription_status: string } | null = null
 
