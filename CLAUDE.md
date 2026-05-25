@@ -27,7 +27,8 @@ URL : https://alphalux.fr
 - Supabase URL config : https://alphalux.fr
 
 ## Structure fichiers clés
-- `app/page.tsx` — dashboard principal (avec écran onboarding si 0 montre)
+- `app/page.tsx` — dashboard principal (redirect → /landing si non connecté, onboarding si 0 montre)
+- `app/landing/page.tsx` — landing page publique (hero + features + pricing + footer)
 - `app/login/page.tsx` — page login/inscription/reset
 - `app/legal/page.tsx` — mentions légales + CGU
 - `app/watch/[id]/page.tsx` — page détail montre
@@ -45,6 +46,11 @@ URL : https://alphalux.fr
 - `app/api/stripe/checkout/route.ts` — création session Stripe Checkout
 - `app/api/stripe/webhook/route.ts` — webhook Stripe (checkout.session.completed, subscription.deleted)
 - `app/api/stripe/portal/route.ts` — portail client Stripe (gestion abonnement)
+- `app/sitemap.ts` — sitemap.xml généré dynamiquement
+- `app/robots.ts` — robots.txt
+- `app/icon.png` — favicon 32x32 (A doré sur fond noir)
+- `app/apple-icon.png` — icône iOS 180x180
+- `app/opengraph-image.png` — image OG 1200x630 (ALPHA/LUX + monogramme)
 - `middleware.ts` — routes publiques (dont /api/stripe/webhook)
 - `vercel.json` — cron job quotidien 8h
 
@@ -69,10 +75,17 @@ URL : https://alphalux.fr
 - Protection routes : redirect vers /pricing si subscription_status != "active"
 
 ## SEO & infra
-- Metadata + OpenGraph dans app/layout.tsx
-- Google Search Console vérifié (public/google9a95fbe24fbd5709.html)
+- Metadata + OpenGraph + og:image + twitter:card dans app/layout.tsx
+- Google Search Console vérifié (public/google9a95fbe24fbd5709.html) + sitemap soumis
 - DMARC configuré sur OVH
 - Redirection contact@alphalux.fr → julien26r@yahoo.fr
+- Meta Pixel Facebook installé dans app/layout.tsx (ID : 1975817959300104)
+
+## Marketing
+- Page Facebook AlphaLux créée
+- Campagne pub Facebook active (objectif trafic, 5€/jour, pays francophones)
+- Visuels pub : format carré Facebook + format vertical TikTok
+- Posts créés : Rolex vs Omega, Submariner +65%
 
 ## Fait ✅
 - Auth complète (connexion, inscription, mot de passe oublié)
@@ -96,11 +109,18 @@ URL : https://alphalux.fr
 - Protection routes par subscription_status
 - Écran onboarding au premier login (0 montre)
 - Page 404 luxury dark
-- Metadata SEO + OpenGraph
-- Google Search Console vérifié
+- Metadata SEO + OpenGraph + og:image (1200x630) + twitter:card
+- Google Search Console vérifié + sitemap soumis + indexation demandée
 - Logo AlphaLux cliquable → / sur toutes les pages
 - Tagline : "La précision au service du prestige."
 - Polices : Cormorant Garamond (titres) + Montserrat (texte) + Playfair Display (italic accents)
+- Landing page publique /landing (hero + features SVG + pricing toggle + footer)
+- Redirection / → /landing pour utilisateurs non connectés
+- Meta Pixel Facebook (ID : 1975817959300104) dans app/layout.tsx
+- Favicon AlphaLux : A doré sur fond noir (32x32, 180x180, ICO)
+- Sitemap.xml + robots.txt (App Router)
+- DMARC + redirection contact@alphalux.fr configurés sur OVH
+- Page Facebook AlphaLux + campagne pub (5€/jour, pays francophones)
 
 ## À faire 🟠 Important
 - Gérer customer.subscription.deleted → passer subscription_status à "inactive"
@@ -108,6 +128,8 @@ URL : https://alphalux.fr
 
 ## À faire 🟡 Recommandé
 - Ajouter Chrono24 comme 2ème source de valorisation (attendre API stable)
+- Blog SEO sur alphalux.fr
+- Continuer posts Facebook/TikTok réguliers
 - V2 : sacs à main de luxe
 
 ## Charte UI
