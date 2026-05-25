@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   title: "AlphaLux — Tableau de bord patrimonial pour montres de luxe",
   description: "Suivez, valorisez et analysez votre collection de montres de luxe. Prix marché en temps réel, graphiques et historique de performance.",
   metadataBase: new URL("https://alphalux.fr"),
+  icons: {
+    icon: [
+      { url: "/icon.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     title: "AlphaLux",
     description: "Tableau de bord patrimonial pour montres de luxe",
