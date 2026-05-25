@@ -145,6 +145,8 @@ export default function LandingPage() {
           display: inline-block;
           padding-top: 0.08em;
           padding-bottom: 0.05em;
+          font-synthesis: none;
+          text-rendering: optimizeLegibility;
         }
         .hero-subtitle {
           font-size: 13px;
@@ -695,7 +697,7 @@ export default function LandingPage() {
             <p className="hero-eyebrow">Tableau de bord patrimonial</p>
             <h1 className="hero-title">
               Votre collection,<br />
-              <em>ma&icirc;tris&eacute;e.</em>
+              <em><span>ma&icirc;</span><span>tris&eacute;e.</span></em>
             </h1>
             <p className="hero-subtitle">
               Suivez la valeur de vos montres de luxe en temps réel. Valorisation marché automatique, graphiques de performance, patrimoine consolidé.
