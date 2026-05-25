@@ -782,30 +782,40 @@ export default function LandingPage() {
           <p className="section-eyebrow">Fonctionnalités</p>
           <h2 className="section-title">Tout ce dont votre collection a besoin</h2>
           <div className="features-grid">
-            {[
-              {
-                icon: "📈",
-                title: "Valorisation en temps réel",
-                desc: "Prix marché mis à jour quotidiennement via eBay. Suivez précisément la cote de chaque pièce de votre collection sans effort.",
-              },
-              {
-                icon: "📊",
-                title: "Graphiques de performance",
-                desc: "Visualisez l'évolution de chaque montre depuis l'achat. Des courbes élégantes pour décisions éclairées.",
-              },
-              {
-                icon: "🏆",
-                title: "Patrimoine consolidé",
-                desc: "Vue d'ensemble de votre collection complète : valeur totale, bénéfice, meilleure performance. Votre patrimoine horloger en un coup d'œil.",
-              },
-            ].map((f) => (
-              <div key={f.title} className="feature-card">
-                <div className="feature-icon">{f.icon}</div>
-                <h3 className="feature-title">{f.title}</h3>
-                <p className="feature-desc">{f.desc}</p>
-                <div className="feature-rule" />
+            <div className="feature-card">
+              <div className="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <polyline points="4,24 12,14 18,19 28,8" stroke="#c9a84c" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  <polyline points="22,8 28,8 28,14" stroke="#c9a84c" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </div>
-            ))}
+              <h3 className="feature-title">Valorisation en temps réel</h3>
+              <p className="feature-desc">Prix marché mis à jour quotidiennement via eBay. Suivez précisément la cote de chaque pièce de votre collection sans effort.</p>
+              <div className="feature-rule" />
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <rect x="4" y="18" width="5" height="10" rx="0.5" stroke="#c9a84c" strokeWidth="1.8" />
+                  <rect x="13" y="11" width="5" height="17" rx="0.5" stroke="#c9a84c" strokeWidth="1.8" />
+                  <rect x="22" y="5" width="5" height="23" rx="0.5" stroke="#c9a84c" strokeWidth="1.8" />
+                </svg>
+              </div>
+              <h3 className="feature-title">Graphiques de performance</h3>
+              <p className="feature-desc">Visualisez l'évolution de chaque montre depuis l'achat. Des courbes élégantes pour décisions éclairées.</p>
+              <div className="feature-rule" />
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <polygon points="16,3 29,16 16,29 3,16" stroke="#c9a84c" strokeWidth="1.8" strokeLinejoin="round" />
+                  <polygon points="16,9 23,16 16,23 9,16" stroke="#c9a84c" strokeWidth="1.4" strokeLinejoin="round" strokeDasharray="2 2" />
+                </svg>
+              </div>
+              <h3 className="feature-title">Patrimoine consolidé</h3>
+              <p className="feature-desc">Vue d'ensemble de votre collection complète : valeur totale, bénéfice, meilleure performance. Votre patrimoine horloger en un coup d'œil.</p>
+              <div className="feature-rule" />
+            </div>
           </div>
         </section>
 
