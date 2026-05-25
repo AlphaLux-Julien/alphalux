@@ -32,6 +32,20 @@ export const metadata: Metadata = {
     siteName: "AlphaLux",
     locale: "fr_FR",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AlphaLux — Tableau de bord patrimonial pour montres de luxe",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AlphaLux",
+    description: "Tableau de bord patrimonial pour montres de luxe",
+    images: ["/opengraph-image.png"],
   },
 };
 
