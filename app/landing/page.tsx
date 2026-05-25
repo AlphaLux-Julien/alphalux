@@ -697,7 +697,7 @@ export default function LandingPage() {
             <p className="hero-eyebrow">Tableau de bord patrimonial</p>
             <h1 className="hero-title">
               Votre collection,<br />
-              <em><span>ma&icirc;</span><span>tris&eacute;e.</span></em>
+              <em style={{fontStyle: 'italic'}}>ma<span style={{fontStyle: 'normal'}}>&icirc;</span>tris&eacute;e.</em>
             </h1>
             <p className="hero-subtitle">
               Suivez la valeur de vos montres de luxe en temps réel. Valorisation marché automatique, graphiques de performance, patrimoine consolidé.
