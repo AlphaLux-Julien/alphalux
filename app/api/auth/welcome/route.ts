@@ -45,7 +45,7 @@ const html = (email: string) => `<!DOCTYPE html>
               </p>
 
               <!-- Titre -->
-              <h1 style="margin:0 0 24px;font-size:32px;font-weight:300;letter-spacing:0.05em;color:#e8e0cc;line-height:1.2;">
+              <h1 style="margin:0 0 24px;font-family:Georgia,'Times New Roman',serif;font-size:32px;font-weight:300;letter-spacing:0.05em;color:#e8e0cc;line-height:1.2;">
                 Bienvenue sur AlphaLux
               </h1>
 
